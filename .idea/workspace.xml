@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="e639d97a-9c8d-4167-b79c-dd7ad5e9807e" name="Changes" comment="reset" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/module/vpc/vpc.tf" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="ProjectId" id="2kY4T0YeaeOtOhkKgSLeOGqMSv7" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "H:/Personal github projects/eks project/module/vpc",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="H:\Personal github projects\eks project\module\vpc" />
+      <recent name="H:\Personal github projects\eks project" />
+      <recent name="H:\Personal github projects\eks project\module\eks" />
+      <recent name="H:\Personal github projects\eks project\module" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="H:\Personal github projects\eks project\module\vpc" />
+      <recent name="H:\Personal github projects\eks project\module\eks" />
+      <recent name="H:\Personal github projects\eks project\module" />
+      <recent name="H:\Personal github projects\eks project" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e639d97a-9c8d-4167-b79c-dd7ad5e9807e" name="Changes" comment="" />
+      <created>1723447181436</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1723447181436</updated>
+      <workItem from="1723447182449" duration="1000" />
+      <workItem from="1723545677427" duration="1368000" />
+      <workItem from="1723550067898" duration="1238000" />
+      <workItem from="1723608259192" duration="2223000" />
+      <workItem from="1723623513885" duration="1836000" />
+      <workItem from="1723781038563" duration="5797000" />
+      <workItem from="1723791351596" duration="3924000" />
+      <workItem from="1724127779264" duration="3145000" />
+      <workItem from="1724220164225" duration="14520000" />
+      <workItem from="1724299446067" duration="12977000" />
+      <workItem from="1724386527752" duration="24703000" />
+    </task>
+    <task id="LOCAL-00001" summary="cvwrv">
+      <created>1724659264717</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1724659264717</updated>
+    </task>
+    <task id="LOCAL-00002" summary="cvwrv">
+      <created>1724659927007</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1724659927007</updated>
+    </task>
+    <task id="LOCAL-00003" summary="cvwrv">
+      <created>1724660225661</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1724660225661</updated>
+    </task>
+    <task id="LOCAL-00004" summary="reset">
+      <created>1724661280659</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1724661280659</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="cvwrv" />
+    <MESSAGE value="reset" />
+    <option name="LAST_COMMIT_MESSAGE" value="reset" />
+  </component>
+</project>
