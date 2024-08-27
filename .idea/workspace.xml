@@ -4,22 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e639d97a-9c8d-4167-b79c-dd7ad5e9807e" name="Changes" comment="reset">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.terraform.lock.hcl" beforeDir="false" afterPath="$PROJECT_DIR$/.terraform.lock.hcl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.tf" beforeDir="false" afterPath="$PROJECT_DIR$/main.tf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/module/vpc/eks.tf" beforeDir="false" afterPath="$PROJECT_DIR$/module/vpc/eks.tf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/module/vpc/variables.tf" beforeDir="false" afterPath="$PROJECT_DIR$/module/vpc/variables.tf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/module/vpc/vpc.tf" beforeDir="false" afterPath="$PROJECT_DIR$/module/vpc/vpc.tf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/terraform.tfvars" beforeDir="false" afterPath="$PROJECT_DIR$/terraform.tfvars" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/variables.tf" beforeDir="false" afterPath="$PROJECT_DIR$/variables.tf" afterDir="false" />
-    </list>
+    <list default="true" id="e639d97a-9c8d-4167-b79c-dd7ad5e9807e" name="Changes" comment="defualt structure of the terraform project" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
@@ -85,7 +81,7 @@
       <workItem from="1724220164225" duration="14520000" />
       <workItem from="1724299446067" duration="12977000" />
       <workItem from="1724386527752" duration="33113000" />
-      <workItem from="1724735313774" duration="4637000" />
+      <workItem from="1724735313774" duration="5040000" />
     </task>
     <task id="LOCAL-00001" summary="cvwrv">
       <created>1724659264717</created>
@@ -115,7 +111,14 @@
       <option name="project" value="LOCAL" />
       <updated>1724661280659</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="defualt structure of the terraform project">
+      <created>1724741515853</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1724741515853</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -136,6 +139,7 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="cvwrv" />
     <MESSAGE value="reset" />
-    <option name="LAST_COMMIT_MESSAGE" value="reset" />
+    <MESSAGE value="defualt structure of the terraform project" />
+    <option name="LAST_COMMIT_MESSAGE" value="defualt structure of the terraform project" />
   </component>
 </project>
