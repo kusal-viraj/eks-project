@@ -19,6 +19,7 @@ resource "aws_vpc" "main_vpc"{
   tags = {
     Name = var.vpc_name
     Env  = var.env
+    "kubernetes.io/cluster/${local.cluster_name}" = "shared"
   }
 }
 
@@ -32,7 +33,7 @@ resource "aws_internet_gateway" "main_igw" {
   tags = {
     Name = var.igw_name
     Env  = var.env
-    "kubernetes.io/cluster/${local.cluster_name}" = "owned"
+    "kubernetes.io/cluster/${local.cluster_name}" = "shared"
   }
   depends_on = [aws_vpc.main_vpc]
 }
@@ -56,7 +57,7 @@ resource "aws_subnet" "main_bastion_subnet" {
   tags = {
     Name = var.bastion_subnet_name
     Env  = var.env
-    "kubernetes.io/cluster/${local.cluster_name}" = "owned"
+    "kubernetes.io/cluster/${local.cluster_name}" = "shared"
   }
   depends_on = [aws_vpc.main_vpc]
 }
@@ -70,7 +71,6 @@ resource "aws_subnet" "main_public_subnet_1" {
   tags = {
     Name = var.public_subnet_1_name
     Env  = var.env
-    "kubernetes.io/cluster/${local.cluster_name}" = "owned"
     "kubernetes.io/cluster/${local.cluster_name}" = "shared"
     "kubernetes.io/role/elb" = "1"
 
@@ -87,7 +87,6 @@ resource "aws_subnet" "main_public_subnet_2" {
   tags = {
     Name = var.public_subnet_2_name
     Env  = var.env
-    "kubernetes.io/cluster/${local.cluster_name}" = "owned"
     "kubernetes.io/cluster/${local.cluster_name}" = "shared"
     "kubernetes.io/role/elb" = "1"
   }
@@ -102,7 +101,6 @@ resource "aws_subnet" "main_private_app_subnet_1" {
   tags = {
     Name = var.private_app_subnet_1_name
     Env  = var.env
-    "kubernetes.io/cluster/${local.cluster_name}" = "owned"
     "kubernetes.io/cluster/${local.cluster_name}" = "shared"
   }
   depends_on = [aws_vpc.main_vpc]
@@ -116,7 +114,6 @@ resource "aws_subnet" "main_private_app_subnet_2" {
   tags = {
     Name = var.private_app_subnet_2_name
     Env  = var.env
-    "kubernetes.io/cluster/${local.cluster_name}" = "owned"
     "kubernetes.io/cluster/${local.cluster_name}" = "shared"
   }
   depends_on = [aws_vpc.main_vpc]
@@ -130,7 +127,6 @@ resource "aws_subnet" "main_private_rds_subnet_1" {
   tags = {
     Name = var.private_rds_subnet_1_name
     Env  = var.env
-    "kubernetes.io/cluster/${local.cluster_name}" = "owned"
     "kubernetes.io/cluster/${local.cluster_name}" = "shared"
   }
   depends_on = [aws_vpc.main_vpc]
@@ -144,7 +140,6 @@ resource "aws_subnet" "main_private_rds_subnet_2" {
   tags = {
     Name = var.private_rds_subnet_2_name
     Env  = var.env
-    "kubernetes.io/cluster/${local.cluster_name}" = "owned"
     "kubernetes.io/cluster/${local.cluster_name}" = "shared"
   }
   depends_on = [aws_vpc.main_vpc]
@@ -170,7 +165,7 @@ resource "aws_route_table" "main_public_rt" {
   tags = {
     Name = var.public_rt
     Env  = var.env
-    "kubernetes.io/cluster/${local.cluster_name}" = "owned"
+    "kubernetes.io/cluster/${local.cluster_name}" = "shared"
   }
 }
 
@@ -179,7 +174,7 @@ resource "aws_route_table" "main_private_rt_1" {
 
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_nat_gateway.main_nat_gw_1.id
+    nat_gateway_id = aws_nat_gateway.main_nat_gw_1.id
   }
 #  route {
 #    cidr_block = "0.0.0.0/0"
@@ -195,7 +190,7 @@ resource "aws_route_table" "main_private_rt_1" {
   tags = {
     Name = var.private_rt_1
     Env  = var.env
-    "kubernetes.io/cluster/${local.cluster_name}" = "owned"
+    "kubernetes.io/cluster/${local.cluster_name}" = "shared"
   }
 }
 
@@ -204,7 +199,7 @@ resource "aws_route_table" "main_private_rt_2" {
 
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_nat_gateway.main_nat_gw_2.id
+    nat_gateway_id = aws_nat_gateway.main_nat_gw_2.id
   }
 
   route {
@@ -215,7 +210,7 @@ resource "aws_route_table" "main_private_rt_2" {
   tags = {
     Name = var.private_rt_2
     Env  = var.env
-    "kubernetes.io/cluster/${local.cluster_name}" = "owned"
+    "kubernetes.io/cluster/${local.cluster_name}" = "shared"
   }
 }
 
@@ -263,7 +258,7 @@ resource "aws_eip" "main_eip_1" {
   tags = {
     Name                                          = var.eip_1
     Env                                           = var.env
-    "kubernetes.io/cluster/${local.cluster_name}" = "owned"
+    "kubernetes.io/cluster/${local.cluster_name}" = "shared"
   }
 }
 
@@ -273,7 +268,7 @@ resource "aws_eip" "main_eip_2" {
   tags = {
     Name                                          = var.eip_2
     Env                                           = var.env
-    "kubernetes.io/cluster/${local.cluster_name}" = "owned"
+    "kubernetes.io/cluster/${local.cluster_name}" = "shared"
   }
 }
 #------------------------------------------------------------------------
@@ -288,7 +283,7 @@ resource "aws_nat_gateway" "main_nat_gw_1" {
   tags = {
     Name = var.nat_gw_1
     Env  = var.env
-    "kubernetes.io/cluster/${local.cluster_name}" = "owned"
+    "kubernetes.io/cluster/${local.cluster_name}" = "shared"
 
   }
 
@@ -304,7 +299,7 @@ resource "aws_nat_gateway" "main_nat_gw_2" {
   tags = {
     Name = var.nat_gw_2
     Env  = var.env
-    "kubernetes.io/cluster/${local.cluster_name}" = "owned"
+    "kubernetes.io/cluster/${local.cluster_name}" = "shared"
 
   }
 
@@ -361,7 +356,7 @@ resource "aws_network_acl" "main_bastion_nacl" {
   tags = {
     Name                                          = var.bastion_nacl
     Env                                           = var.env
-    "kubernetes.io/cluster/${local.cluster_name}" = "owned"
+    "kubernetes.io/cluster/${local.cluster_name}" = "shared"
   }
 }
 
@@ -431,7 +426,7 @@ resource "aws_network_acl" "main_public_nacl" {
   tags = {
     Name                                          = var.public_nacl
     Env                                           = var.env
-    "kubernetes.io/cluster/${local.cluster_name}" = "owned"
+    "kubernetes.io/cluster/${local.cluster_name}" = "shared"
   }
 }
 
@@ -497,7 +492,7 @@ resource "aws_network_acl" "main_private_app_nacl" {
   tags = {
     Name                                          = var.private_app_nacl
     Env                                           = var.env
-    "kubernetes.io/cluster/${local.cluster_name}" = "owned"
+    "kubernetes.io/cluster/${local.cluster_name}" = "shared"
   }
 }
 
@@ -543,7 +538,7 @@ resource "aws_network_acl" "main_private_rds_nacl" {
   tags = {
     Name                                          = var.private_rds_nacl
     Env                                           = var.env
-    "kubernetes.io/cluster/${local.cluster_name}" = "owned"
+    "kubernetes.io/cluster/${local.cluster_name}" = "shared"
   }
 }
 
@@ -606,7 +601,7 @@ resource "aws_security_group" "bastion_sg" {
   tags = {
     Name                                          = var.bastion_sg_name
     Env                                           = var.env
-    "kubernetes.io/cluster/${local.cluster_name}" = "owned"
+    "kubernetes.io/cluster/${local.cluster_name}" = "shared"
   }
 }
 
@@ -627,7 +622,7 @@ resource "aws_instance" "bastion_instance" {
   tags = {
     Name                                          = var.bastion_instance_name # Replace with the desired instance name
     Env                                           = var.env
-    "kubernetes.io/cluster/${local.cluster_name}" = "owned"
+    "kubernetes.io/cluster/${local.cluster_name}" = "shared"
   }
 
   # Ensure the instance is created after the subnet and security groups

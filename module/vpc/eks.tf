@@ -77,22 +77,51 @@ resource "aws_eks_cluster" "main_eks_cluster" {
   vpc_config {
     subnet_ids = [aws_subnet.main_public_subnet_1.id,aws_subnet.main_public_subnet_2.id,aws_subnet.main_private_app_subnet_1.id,aws_subnet.main_private_app_subnet_2.id]  # Public subnets for frontend
     #subnet_ids = [module.vpc.main_public_subnet_1,module.vpc.main_public_subnet_2,module.vpc.main_private_app_subnet_1,module.vpc.main_private_app_subnet_2]
+
+    endpoint_private_access = true
+    endpoint_public_access  = false
+
+    # Cluster security group
+    security_group_ids = [aws_security_group.eks_cluster_sg.id]
+
   }
 }
 
-# Frontend Node Group
+## Frontend Node Group
+#resource "aws_eks_node_group" "frontend_node_group" {
+#  cluster_name    = aws_eks_cluster.main_eks_cluster.name
+#  node_group_name = "frontend-node-group"
+#  node_role_arn   = aws_iam_role.eks_node_role.arn
+#  subnet_ids      = [aws_subnet.main_public_subnet_1.id,aws_subnet.main_public_subnet_2.id] # Public subnets
+#  #subnet_ids     = [module.vpc.main_public_subnet_1,module.vpc.main_public_subnet_1] # Public subnets
+#
+#
+#  launch_template {
+#    id      = aws_launch_template.frontend_launch_template.id
+#    version = "$Latest"
+#  }
+#
+#  scaling_config {
+#    desired_size = 2
+#    min_size     = 2
+#    max_size     = 4
+#  }
+#
+#  instance_types = ["t3.medium"]  # Instance type for frontend
+#
+#  tags = {
+#    Name = "frontend-node-group"
+#    Env  = var.env
+#    "kubernetes.io/cluster/${local.cluster_name}" = "owned"
+#  }
+#}
+
+# Frontend Node Group - Managed Node Group
 resource "aws_eks_node_group" "frontend_node_group" {
   cluster_name    = aws_eks_cluster.main_eks_cluster.name
-  node_group_name = "frontend-node-group"
+  node_group_name = "frontend_node_group"
   node_role_arn   = aws_iam_role.eks_node_role.arn
-  subnet_ids         = [aws_subnet.main_public_subnet_1.id,aws_subnet.main_public_subnet_1.id] # Public subnets
-  #subnet_ids         = [module.vpc.main_public_subnet_1,module.vpc.main_public_subnet_1] # Public subnets
-
-
-  launch_template {
-    id      = aws_launch_template.frontend_launch_template.id
-    version = "$Latest"
-  }
+  subnet_ids      = [aws_subnet.main_public_subnet_1.id, aws_subnet.main_public_subnet_2.id]
 
   scaling_config {
     desired_size = 2
@@ -100,28 +129,70 @@ resource "aws_eks_node_group" "frontend_node_group" {
     max_size     = 4
   }
 
-  instance_types = ["t3.medium"]  # Instance type for frontend
+  instance_types = ["t3.medium"]
 
   tags = {
-    Name = "frontend-node-group"
+    Name = "frontend_node_group"
     Env  = var.env
-    "kubernetes.io/cluster/${local.cluster_name}" = "owned"
+    "kubernetes.io/cluster/${aws_eks_cluster.main_eks_cluster.name}" = "owned"
+  }
+
+  labels = {
+    Name = "${var.cluster_name}_frontend_node"
+  }
+
+
+  capacity_type = "ON_DEMAND" # Can also be "SPOT" for spot instances
+
+  # Optional: Disk size for nodes (in GiB)
+  disk_size = 20
+
+  update_config {
+    max_unavailable = 1
+  }
+
+  # Optional: Remote access configuration (for SSH access to nodes)
+  remote_access {
+    ec2_ssh_key              = var.node_ssh_key_name
+    source_security_group_ids = [aws_security_group.eks_frontend_node_group_sg.id]
   }
 }
 
-# Backend Node Group
+## Backend Node Group
+#resource "aws_eks_node_group" "backend_node_group" {
+#  cluster_name    = aws_eks_cluster.main_eks_cluster.name
+#  node_group_name = "backend-node-group"
+#  node_role_arn   = aws_iam_role.eks_node_role.arn
+#  subnet_ids      = [aws_subnet.main_private_app_subnet_1.id,aws_subnet.main_private_app_subnet_2.id]  # Private subnets
+#  #subnet_ids     = [module.vpc.main_private_app_subnet_1,module.vpc.main_private_app_subnet_2]
+#
+#  launch_template {
+#    id      = aws_launch_template.backend_launch_template.id
+#    version = "$Latest"
+#  }
+#
+#
+#  scaling_config {
+#    desired_size = 4
+#    min_size     = 2
+#    max_size     = 6
+#  }
+#
+#  instance_types = ["t3.large"]  # Instance type for backend
+#
+#  tags = {
+#    Name = "backend-node-group"
+#    Env  = var.env
+#    "kubernetes.io/cluster/${local.cluster_name}" = "owned"
+#  }
+#}
+
+# Backend Node Group - Managed Node Group
 resource "aws_eks_node_group" "backend_node_group" {
   cluster_name    = aws_eks_cluster.main_eks_cluster.name
   node_group_name = "backend-node-group"
   node_role_arn   = aws_iam_role.eks_node_role.arn
-  subnet_ids        = [aws_subnet.main_private_app_subnet_1.id,aws_subnet.main_private_app_subnet_2.id]  # Private subnets
-  #subnet_ids        = [module.vpc.main_private_app_subnet_1,module.vpc.main_private_app_subnet_2]
-
-  launch_template {
-    id      = aws_launch_template.backend_launch_template.id
-    version = "$Latest"
-  }
-
+  subnet_ids      = [aws_subnet.main_private_app_subnet_1.id, aws_subnet.main_private_app_subnet_2.id]
 
   scaling_config {
     desired_size = 4
@@ -129,14 +200,34 @@ resource "aws_eks_node_group" "backend_node_group" {
     max_size     = 6
   }
 
-  instance_types = ["t3.large"]  # Instance type for backend
+  instance_types = ["t3.large"]
 
   tags = {
     Name = "backend-node-group"
     Env  = var.env
-    "kubernetes.io/cluster/${local.cluster_name}" = "owned"
+    "kubernetes.io/cluster/${aws_eks_cluster.main_eks_cluster.name}" = "owned"
+  }
+
+  labels = {
+    Name = "${var.cluster_name}_backend_node"
+  }
+
+  capacity_type = "ON_DEMAND" # Can also be "SPOT" for spot instances
+
+  # Optional: Disk size for nodes (in GiB)
+  disk_size = 20
+
+  update_config {
+    max_unavailable = 1
+  }
+
+  # Optional: Remote access configuration (for SSH access to nodes)
+  remote_access {
+    ec2_ssh_key              = var.node_ssh_key_name
+    source_security_group_ids = [aws_security_group.eks_backend_node_group_sg.id]
   }
 }
+
 
 # IAM Role for EKS Cluster
 resource "aws_iam_role" "eks_cluster_role" {
@@ -362,38 +453,57 @@ resource "aws_security_group" "eks_backend_node_group_sg" {
 
 
 
-resource "aws_launch_template" "frontend_launch_template" {
-  name          = "frontend-node-launch-template"
-  image_id      = var.frontend_node_group_ami  # Use the appropriate AMI
-  #instance_type = "t3.medium"
-  key_name      = var.Bastion_key_name
+#resource "aws_launch_template" "frontend_launch_template" {
+#  name          = "frontend-node-launch-template"
+#  image_id      = var.frontend_node_group_ami  # Use the appropriate AMI
+#  #instance_type = "t3.medium"
+#  key_name      = var.Bastion_key_name
+#
+#  network_interfaces {
+#    security_groups = [aws_security_group.eks_frontend_node_group_sg.id]  # Attach security group here
+#  }
+#
+#  tags = {
+#    Name = "frontend_launch_template"
+#    Env  = var.env
+#    "kubernetes.io/cluster/${local.cluster_name}" = "owned"
+#  }
+#}
 
-  network_interfaces {
-    security_groups = [aws_security_group.eks_frontend_node_group_sg.id]  # Attach security group here
-  }
+#resource "aws_launch_template" "backend_launch_template" {
+#  name     = "backend-node-launch-template"
+#  image_id = var.backend_node_group_ami  # Use the appropriate AMI
+#  #instance_type = "t3.large"
+#  key_name = var.Bastion_key_name
+#
+#  network_interfaces {
+#    security_groups = [aws_security_group.eks_backend_node_group_sg.id]  # Attach security group here
+#  }
+#
+#  tags = {
+#    Name                                          = "backend_launch_template"
+#    Env                                           = var.env
+#    "kubernetes.io/cluster/${local.cluster_name}" = "owned"
+#  }
+#}
 
-  tags = {
-    Name = "frontend_launch_template"
-    Env  = var.env
-    "kubernetes.io/cluster/${local.cluster_name}" = "owned"
-  }
-}
-
-resource "aws_launch_template" "backend_launch_template" {
-  name          = "backend-node-launch-template"
-  image_id      = var.backend_node_group_ami  # Use the appropriate AMI
-  #instance_type = "t3.large"
-  key_name      = var.Bastion_key_name
-
-  network_interfaces {
-    security_groups = [aws_security_group.eks_backend_node_group_sg.id]  # Attach security group here
-  }
-
-  tags = {
-    Name = "backend_launch_template"
-    Env  = var.env
-    "kubernetes.io/cluster/${local.cluster_name}" = "owned"
-  }
+#resource "kubernetes_config_map" "aws_auth" {
+#  metadata {
+#    name      = "aws-auth"
+#    namespace = "kube-system"
+#  }
+#
+#  data = {
+#    mapRoles = yamlencode({
+#      - rolearn: "${aws_iam_role.eks_node_role.arn}"
+#      username: "system:node:{{EC2PrivateDNSName}}"
+#      groups: [
+#        "system:bootstrappers",
+#        "system:nodes"
+#      ]
+#    })
+#  }
+#}
 
 
-}
+

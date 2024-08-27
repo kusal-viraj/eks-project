@@ -55,6 +55,7 @@ module "vpc" {
 
   frontend_node_group_ami = var.frontend_node_group_ami
   backend_node_group_ami  = var.backend_node_group_ami
+  node_ssh_key_name=var.node_ssh_key_name
 
 }
 

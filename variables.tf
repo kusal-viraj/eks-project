@@ -195,3 +195,8 @@ variable "backend_node_group_ami" {
   type        = string
   description = "IP of the vpn"
 }
+
+variable "node_ssh_key_name" {
+  type = string
+  description = "IP of the vpn"
+}
