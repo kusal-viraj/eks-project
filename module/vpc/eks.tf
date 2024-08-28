@@ -453,57 +453,7 @@ resource "aws_security_group" "eks_backend_node_group_sg" {
 
 
 
-#resource "aws_launch_template" "frontend_launch_template" {
-#  name          = "frontend-node-launch-template"
-#  image_id      = var.frontend_node_group_ami  # Use the appropriate AMI
-#  #instance_type = "t3.medium"
-#  key_name      = var.Bastion_key_name
-#
-#  network_interfaces {
-#    security_groups = [aws_security_group.eks_frontend_node_group_sg.id]  # Attach security group here
-#  }
-#
-#  tags = {
-#    Name = "frontend_launch_template"
-#    Env  = var.env
-#    "kubernetes.io/cluster/${local.cluster_name}" = "owned"
-#  }
-#}
 
-#resource "aws_launch_template" "backend_launch_template" {
-#  name     = "backend-node-launch-template"
-#  image_id = var.backend_node_group_ami  # Use the appropriate AMI
-#  #instance_type = "t3.large"
-#  key_name = var.Bastion_key_name
-#
-#  network_interfaces {
-#    security_groups = [aws_security_group.eks_backend_node_group_sg.id]  # Attach security group here
-#  }
-#
-#  tags = {
-#    Name                                          = "backend_launch_template"
-#    Env                                           = var.env
-#    "kubernetes.io/cluster/${local.cluster_name}" = "owned"
-#  }
-#}
-
-#resource "kubernetes_config_map" "aws_auth" {
-#  metadata {
-#    name      = "aws-auth"
-#    namespace = "kube-system"
-#  }
-#
-#  data = {
-#    mapRoles = yamlencode({
-#      - rolearn: "${aws_iam_role.eks_node_role.arn}"
-#      username: "system:node:{{EC2PrivateDNSName}}"
-#      groups: [
-#        "system:bootstrappers",
-#        "system:nodes"
-#      ]
-#    })
-#  }
-#}
 
 
 
