@@ -107,6 +107,6 @@ variable "bastion_instance_name" {
 
 
 variable "node_ssh_key_name" {
-  type = string
+  type        = string
   description = "IP of the vpn"
 }

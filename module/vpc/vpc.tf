@@ -616,6 +616,7 @@ resource "aws_security_group" "bastion_sg" {
 ##-----------------bastion ec2 Deployement-----------------------------------------
 
 resource "aws_instance" "bastion_instance" {
+
   ami                    = var.bastion_ami_id                       # Replace with the AMI ID you want to use
   instance_type          = var.bastion_instance_type                # Replace with your desired instance type (e.g., "t2.micro")
   subnet_id              = aws_subnet.main_bastion_subnet.id # This refers to the Bastion subnet you defined earlier

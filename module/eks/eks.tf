@@ -11,13 +11,20 @@
 #}
 
 
+module "vpc" {
+  source = "../vpc"
+
+  # Pass any necessary inputs if your VPC module requires them
+  env = var.env
+}
+
 resource "aws_eks_cluster" "main_eks_cluster" {
   name     = var.cluster_name
   role_arn = aws_iam_role.eks_cluster_role.arn
 
   vpc_config {
-    subnet_ids = [aws_subnet.main_public_subnet_1.id,aws_subnet.main_public_subnet_2.id,aws_subnet.main_private_app_subnet_1.id,aws_subnet.main_private_app_subnet_2.id]  # Public subnets for frontend
-    #subnet_ids = [module.vpc.main_public_subnet_1,module.vpc.main_public_subnet_2,module.vpc.main_private_app_subnet_1,module.vpc.main_private_app_subnet_2]
+    #subnet_ids = [aws_subnet.main_public_subnet_1.id,aws_subnet.main_public_subnet_2.id,aws_subnet.main_private_app_subnet_1.id,aws_subnet.main_private_app_subnet_2.id]  # Public subnets for frontend
+    subnet_ids = [module.vpc.main_public_subnet_1_id,module.vpc.main_public_subnet_2_id,module.vpc.main_private_app_subnet_1_id,module.vpc.main_private_app_subnet_2_id]
 
     endpoint_private_access = true
     endpoint_public_access  = false
@@ -30,10 +37,12 @@ resource "aws_eks_cluster" "main_eks_cluster" {
 
 # Frontend Node Group - Managed Node Group
 resource "aws_eks_node_group" "frontend_node_group" {
+
   cluster_name    = aws_eks_cluster.main_eks_cluster.name
   node_group_name = "frontend_node_group"
   node_role_arn   = aws_iam_role.eks_node_role.arn
-  subnet_ids      = [aws_subnet.main_public_subnet_1.id, aws_subnet.main_public_subnet_2.id]
+  #subnet_ids      = [aws_subnet.main_public_subnet_1.id, aws_subnet.main_public_subnet_2.id]
+  subnet_ids      = [module.vpc.main_public_subnet_1_id,module.vpc.main_public_subnet_2_id]
 
   scaling_config {
     desired_size = 2
@@ -75,7 +84,8 @@ resource "aws_eks_node_group" "backend_node_group" {
   cluster_name    = aws_eks_cluster.main_eks_cluster.name
   node_group_name = "backend-node-group"
   node_role_arn   = aws_iam_role.eks_node_role.arn
-  subnet_ids      = [aws_subnet.main_private_app_subnet_1.id, aws_subnet.main_private_app_subnet_2.id]
+  #subnet_ids      = [aws_subnet.main_private_app_subnet_1.id, aws_subnet.main_private_app_subnet_2.id]
+  subnet_ids      = [module.vpc.main_private_app_subnet_1_id,module.vpc.main_private_app_subnet_2_id]
 
   scaling_config {
     desired_size = 4
@@ -159,16 +169,16 @@ resource "aws_iam_role_policy_attachment" "eks_cluster_policy" {
 resource "aws_security_group" "eks_cluster_sg" {
   name        = "eks-cluster-sg"
   description = "Security group for the EKS cluster"
-  vpc_id      = aws_vpc.main_vpc.id
-  #vpc_id      = module.vpc.main_vpc
+  #vpc_id      = aws_vpc.main_vpc.id
+  vpc_id      = module.vpc.vpc_id
 
   ingress {
     description = "Allow worker nodes to communicate with EKS API server"
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
-    cidr_blocks = [aws_vpc.main_vpc.cidr_block]  # Replace with the correct CIDR block
-    #cidr_blocks = [module.vpc.vpc_cidr_block]
+    #cidr_blocks = [aws_vpc.main_vpc.cidr_block]  # Replace with the correct CIDR block
+    cidr_blocks = [module.vpc.vpc_cidr_block]
 
   }
 
@@ -177,8 +187,8 @@ resource "aws_security_group" "eks_cluster_sg" {
     from_port   = 10250
     to_port     = 10250
     protocol    = "tcp"
-    cidr_blocks = [aws_vpc.main_vpc.cidr_block]
-    #cidr_blocks = [module.vpc.vpc_cidr_block]
+    #cidr_blocks = [aws_vpc.main_vpc.cidr_block]
+    cidr_blocks = [module.vpc.vpc_cidr_block]
 
   }
 
@@ -202,16 +212,16 @@ resource "aws_security_group" "eks_cluster_sg" {
 resource "aws_security_group" "eks_frontend_node_group_sg" {
   name        = "eks-frontend_node-sg"
   description = "Security group for the EKS nodes"
-  vpc_id      = aws_vpc.main_vpc.id
-  #vpc_id      = module.vpc.main_vpc
+  #vpc_id      = aws_vpc.main_vpc.id
+  vpc_id      = module.vpc.vpc_id
 
   ingress {
     description = "Allow EKS API server to communicate with nodes"
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
-    cidr_blocks = [aws_vpc.main_vpc.cidr_block]  # Replace with the correct CIDR block
-    #cidr_blocks = [module.vpc.vpc_cidr_block]
+    #cidr_blocks = [aws_vpc.main_vpc.cidr_block]  # Replace with the correct CIDR block
+    cidr_blocks = [module.vpc.vpc_cidr_block]
   }
 
   ingress {
@@ -219,8 +229,8 @@ resource "aws_security_group" "eks_frontend_node_group_sg" {
     from_port   = 10250
     to_port     = 10250
     protocol    = "tcp"
-    cidr_blocks = [aws_vpc.main_vpc.cidr_block]
-    #cidr_blocks = [module.vpc.vpc_cidr_block]
+    #cidr_blocks = [aws_vpc.main_vpc.cidr_block]
+    cidr_blocks = [module.vpc.vpc_cidr_block]
   }
 
   ingress {
@@ -237,8 +247,8 @@ resource "aws_security_group" "eks_frontend_node_group_sg" {
     to_port     = 22
     protocol    = "tcp"
     self        = true
-    cidr_blocks =[aws_subnet.main_bastion_subnet.cidr_block]
-    #cidr_blocks = [module.vpc.bastion_subnet_cidr]
+    #cidr_blocks =[aws_subnet.main_bastion_subnet.cidr_block]
+    cidr_blocks = [module.vpc.bastion_subnet_cidr]
   }
 
   ingress {
@@ -262,7 +272,8 @@ resource "aws_security_group" "eks_frontend_node_group_sg" {
 resource "aws_security_group" "eks_backend_node_group_sg" {
   name        = "eks-backend_node-sg"
   description = "Security group for the EKS nodes"
-  vpc_id      = aws_vpc.main_vpc.id
+  #vpc_id      = aws_vpc.main_vpc.id
+  vpc_id      = module.vpc.vpc_id
 
 
   ingress {
@@ -270,8 +281,8 @@ resource "aws_security_group" "eks_backend_node_group_sg" {
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
-    cidr_blocks = [aws_vpc.main_vpc.cidr_block]  # Replace with the correct CIDR block
-    #cidr_blocks = [module.vpc.vpc_cidr_block]
+    #cidr_blocks = [aws_vpc.main_vpc.cidr_block]  # Replace with the correct CIDR block
+    cidr_blocks = [module.vpc.vpc_cidr_block]
 
   }
 
@@ -280,8 +291,8 @@ resource "aws_security_group" "eks_backend_node_group_sg" {
     from_port   = 10250
     to_port     = 10250
     protocol    = "tcp"
-    cidr_blocks = [aws_vpc.main_vpc.cidr_block]
-    #cidr_blocks = [module.vpc.vpc_cidr_block]
+    #cidr_blocks = [aws_vpc.main_vpc.cidr_block]
+    cidr_blocks = [module.vpc.vpc_cidr_block]
 
   }
 
@@ -299,8 +310,8 @@ resource "aws_security_group" "eks_backend_node_group_sg" {
     to_port     = 22
     protocol    = "tcp"
     self        = true
-    cidr_blocks =[aws_subnet.main_bastion_subnet.cidr_block]
-    #cidr_blocks = [module.vpc.bastion_subnet_cidr]
+    #cidr_blocks =[aws_subnet.main_bastion_subnet.cidr_block]
+    cidr_blocks = [module.vpc.bastion_subnet_cidr]
   }
 
   ingress {

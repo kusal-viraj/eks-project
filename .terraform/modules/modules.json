@@ -1,1 +1,1 @@
-{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"eks","Source":"./module/eks","Dir":"module/eks"},{"Key":"eks.vpc","Source":"./module/eks","Dir":""},{"Key":"vpc","Source":"./module/vpc","Dir":"module/vpc"}]}
+{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"eks","Source":"./module/eks","Dir":"module/eks"},{"Key":"eks.vpc","Source":"../vpc","Dir":"module/vpc"},{"Key":"vpc","Source":"./module/vpc","Dir":"module/vpc"}]}

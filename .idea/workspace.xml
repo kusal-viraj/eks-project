@@ -4,7 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e639d97a-9c8d-4167-b79c-dd7ad5e9807e" name="Changes" comment="defualt structure of the terraform project" />
+    <list default="true" id="e639d97a-9c8d-4167-b79c-dd7ad5e9807e" name="Changes" comment="defualt structure of the terraform project">
+      <change afterPath="$PROJECT_DIR$/.terraform/providers/registry.terraform.io/hashicorp/aws/5.64.0/windows_amd64/LICENSE.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.terraform/providers/registry.terraform.io/hashicorp/aws/5.64.0/windows_amd64/terraform-provider-aws_v5.64.0_x5.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.terraform/modules/modules.json" beforeDir="false" afterPath="$PROJECT_DIR$/.terraform/modules/modules.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.tf" beforeDir="false" afterPath="$PROJECT_DIR$/main.tf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/module/eks/eks.tf" beforeDir="false" afterPath="$PROJECT_DIR$/module/eks/eks.tf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/module/vpc/outputs.tf" beforeDir="false" afterPath="$PROJECT_DIR$/module/vpc/outputs.tf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/module/vpc/variables.tf" beforeDir="false" afterPath="$PROJECT_DIR$/module/vpc/variables.tf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/module/vpc/vpc.tf" beforeDir="false" afterPath="$PROJECT_DIR$/module/vpc/vpc.tf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/terraform.tfvars" beforeDir="false" afterPath="$PROJECT_DIR$/terraform.tfvars" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/variables.tf" beforeDir="false" afterPath="$PROJECT_DIR$/variables.tf" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -30,35 +43,35 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;H:/Personal github projects/eks project/module/vpc&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "H:/Personal github projects/eks project/module/eks",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="H:\Personal github projects\eks project\module\eks" />
       <recent name="H:\Personal github projects\eks project\module\vpc" />
       <recent name="H:\Personal github projects\eks project" />
-      <recent name="H:\Personal github projects\eks project\module\eks" />
       <recent name="H:\Personal github projects\eks project\module" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="H:\Personal github projects\eks project\module\vpc" />
       <recent name="H:\Personal github projects\eks project\module\eks" />
+      <recent name="H:\Personal github projects\eks project\module\vpc" />
       <recent name="H:\Personal github projects\eks project\module" />
       <recent name="H:\Personal github projects\eks project" />
     </key>
@@ -83,6 +96,7 @@
       <workItem from="1724299446067" duration="12977000" />
       <workItem from="1724386527752" duration="33113000" />
       <workItem from="1724735313774" duration="5040000" />
+      <workItem from="1724837823921" duration="6685000" />
     </task>
     <task id="LOCAL-00001" summary="cvwrv">
       <created>1724659264717</created>
@@ -119,7 +133,21 @@
       <option name="project" value="LOCAL" />
       <updated>1724741515853</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="defualt structure of the terraform project">
+      <created>1724837873143</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1724837873143</updated>
+    </task>
+    <task id="LOCAL-00007" summary="defualt structure of the terraform project">
+      <created>1724842625277</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1724842625277</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
