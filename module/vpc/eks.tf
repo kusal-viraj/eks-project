@@ -79,7 +79,7 @@ resource "aws_eks_cluster" "main_eks_cluster" {
     #subnet_ids = [module.vpc.main_public_subnet_1,module.vpc.main_public_subnet_2,module.vpc.main_private_app_subnet_1,module.vpc.main_private_app_subnet_2]
 
     endpoint_private_access = true
-    endpoint_public_access  = false
+    endpoint_public_access  = true
 
     # Cluster security group
     security_group_ids = [aws_security_group.eks_cluster_sg.id]
