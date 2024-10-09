@@ -31,7 +31,7 @@ resource "aws_internet_gateway" "main_igw" {
   vpc_id = aws_vpc.main_vpc.id
 
   tags = {
-    Name = var.igw_name
+    Name = "${var.vpc_name}_igw"
     Env  = var.env
     "kubernetes.io/cluster/${local.cluster_name}" = "shared"
   }
@@ -49,13 +49,14 @@ resource "aws_internet_gateway" "main_igw" {
 ##------------Subnets------------------------------------------------------
 
 resource "aws_subnet" "main_bastion_subnet" {
+
   vpc_id     = aws_vpc.main_vpc.id
   cidr_block = var.bastion_subnet_cidr
   availability_zone = local.desired_azs[0]# AZ A
   map_public_ip_on_launch = true
 
   tags = {
-    Name = var.bastion_subnet_name
+    Name = "${var.vpc_name}_bastion_subnet"
     Env  = var.env
     "kubernetes.io/cluster/${local.cluster_name}" = "shared"
   }
@@ -63,43 +64,46 @@ resource "aws_subnet" "main_bastion_subnet" {
 }
 
 resource "aws_subnet" "main_public_subnet_1" {
+
   vpc_id     = aws_vpc.main_vpc.id
   cidr_block = var.public_subnet_1_cidr
   availability_zone = local.desired_azs[0]  # AZ A
   map_public_ip_on_launch = true
 
   tags = {
-    Name = var.public_subnet_1_name
+    Name = "${var.vpc_name}_public_subnet_1"
     Env  = var.env
     "kubernetes.io/cluster/${local.cluster_name}" = "shared"
-    "kubernetes.io/role/elb" = "1"
+    #"kubernetes.io/role/elb" = "1"
 
   }
   depends_on = [aws_vpc.main_vpc]
 }
 
 resource "aws_subnet" "main_public_subnet_2" {
+
   vpc_id     = aws_vpc.main_vpc.id
   cidr_block = var.public_subnet_2_cidr
   availability_zone = local.desired_azs[1]  # AZ B
   map_public_ip_on_launch = true
 
   tags = {
-    Name = var.public_subnet_2_name
+    Name = "${var.vpc_name}_public_subnet_2"
     Env  = var.env
     "kubernetes.io/cluster/${local.cluster_name}" = "shared"
-    "kubernetes.io/role/elb" = "1"
+    #"kubernetes.io/role/elb" = "1"
   }
   depends_on = [aws_vpc.main_vpc]
 }
 
 resource "aws_subnet" "main_private_app_subnet_1" {
+
   vpc_id     = aws_vpc.main_vpc.id
   cidr_block = var.private_app_subnet_1_cidr
   availability_zone = local.desired_azs[0]  # AZ A
 
   tags = {
-    Name = var.private_app_subnet_1_name
+    Name = "${var.vpc_name}_private_app_subnet_1"
     Env  = var.env
     "kubernetes.io/cluster/${local.cluster_name}" = "shared"
   }
@@ -107,12 +111,13 @@ resource "aws_subnet" "main_private_app_subnet_1" {
 }
 
 resource "aws_subnet" "main_private_app_subnet_2" {
+
   vpc_id     = aws_vpc.main_vpc.id
   cidr_block = var.private_app_subnet_2_cidr
   availability_zone = local.desired_azs[1]  # AZ B
 
   tags = {
-    Name = var.private_app_subnet_2_name
+    Name = "${var.vpc_name}_private_app_subnet_2"
     Env  = var.env
     "kubernetes.io/cluster/${local.cluster_name}" = "shared"
   }
@@ -120,12 +125,13 @@ resource "aws_subnet" "main_private_app_subnet_2" {
 }
 
 resource "aws_subnet" "main_private_rds_subnet_1" {
+
   vpc_id     = aws_vpc.main_vpc.id
   cidr_block = var.private_rds_subnet_1_cidr
   availability_zone = local.desired_azs[0]  # AZ A
 
   tags = {
-    Name = var.private_rds_subnet_1_name
+    Name = "${var.vpc_name}_private_rds_subnet_1"
     Env  = var.env
     "kubernetes.io/cluster/${local.cluster_name}" = "shared"
   }
@@ -133,12 +139,13 @@ resource "aws_subnet" "main_private_rds_subnet_1" {
 }
 
 resource "aws_subnet" "main_private_rds_subnet_2" {
+
   vpc_id     = aws_vpc.main_vpc.id
   cidr_block = var.private_rds_subnet_2_cidr
   availability_zone = local.desired_azs[1]  # AZ B
 
   tags = {
-    Name = var.private_rds_subnet_2_name
+    Name = "${var.vpc_name}_private_rds_subnet_2"
     Env  = var.env
     "kubernetes.io/cluster/${local.cluster_name}" = "shared"
   }
@@ -150,6 +157,7 @@ resource "aws_subnet" "main_private_rds_subnet_2" {
 ##--------------Route Tables-------------------------------------------
 
 resource "aws_route_table" "main_public_rt" {
+
   vpc_id = aws_vpc.main_vpc.id
 
   route {
@@ -163,38 +171,35 @@ resource "aws_route_table" "main_public_rt" {
   }
 
   tags = {
-    Name = var.public_rt
+    Name = "${var.vpc_name}_public_rt"
     Env  = var.env
     "kubernetes.io/cluster/${local.cluster_name}" = "shared"
   }
 }
 
 resource "aws_route_table" "main_private_rt_1" {
+
   vpc_id = aws_vpc.main_vpc.id
 
   route {
     cidr_block = "0.0.0.0/0"
     nat_gateway_id = aws_nat_gateway.main_nat_gw_1.id
   }
-#  route {
-#    cidr_block = "0.0.0.0/0"
-#    gateway_id = aws_nat_gateway.main_nat_gw_2.id
-#  }
+
   route {
     cidr_block = "10.50.0.0/16"
     gateway_id = "local"
   }
 
-
-
   tags = {
-    Name = var.private_rt_1
+    Name = "${var.vpc_name}_private_rt_1"
     Env  = var.env
     "kubernetes.io/cluster/${local.cluster_name}" = "shared"
   }
 }
 
 resource "aws_route_table" "main_private_rt_2" {
+
   vpc_id = aws_vpc.main_vpc.id
 
   route {
@@ -208,7 +213,7 @@ resource "aws_route_table" "main_private_rt_2" {
   }
 
   tags = {
-    Name = var.private_rt_2
+    Name = "${var.vpc_name}_private_rt_2"
     Env  = var.env
     "kubernetes.io/cluster/${local.cluster_name}" = "shared"
   }
@@ -256,7 +261,7 @@ resource "aws_eip" "main_eip_1" {
   domain = "vpc"
 
   tags = {
-    Name                                          = var.eip_1
+    Name                                          = "${var.vpc_name}_eip_1"
     Env                                           = var.env
     "kubernetes.io/cluster/${local.cluster_name}" = "shared"
   }
@@ -266,7 +271,7 @@ resource "aws_eip" "main_eip_2" {
   domain = "vpc"
 
   tags = {
-    Name                                          = var.eip_2
+    Name                                          = "${var.vpc_name}_eip_2"
     Env                                           = var.env
     "kubernetes.io/cluster/${local.cluster_name}" = "shared"
   }
@@ -277,11 +282,12 @@ resource "aws_eip" "main_eip_2" {
 ##--------------Nat Gateways---------------------------------------------
 
 resource "aws_nat_gateway" "main_nat_gw_1" {
+
   allocation_id = aws_eip.main_eip_1.id
   subnet_id     = aws_subnet.main_public_subnet_1.id
 
   tags = {
-    Name = var.nat_gw_1
+    Name = "${var.vpc_name}_nat_gw_1"
     Env  = var.env
     "kubernetes.io/cluster/${local.cluster_name}" = "shared"
 
@@ -293,18 +299,17 @@ resource "aws_nat_gateway" "main_nat_gw_1" {
 }
 
 resource "aws_nat_gateway" "main_nat_gw_2" {
+
   allocation_id = aws_eip.main_eip_2.id
   subnet_id     = aws_subnet.main_public_subnet_2.id
 
   tags = {
-    Name = var.nat_gw_2
+    Name = "${var.vpc_name}_nat_gw_2"
     Env  = var.env
     "kubernetes.io/cluster/${local.cluster_name}" = "shared"
 
   }
 
-  # To ensure proper ordering, it is recommended to add an explicit dependency
-  # on the Internet Gateway for the VPC.
   depends_on = [aws_internet_gateway.main_igw]
 }
 #--------------------------------------------------------------------------------------
@@ -312,35 +317,35 @@ resource "aws_nat_gateway" "main_nat_gw_2" {
 ##----------------Network Acl---------------------------------------------------------
 
 resource "aws_network_acl" "main_bastion_nacl" {
+
   vpc_id = aws_vpc.main_vpc.id
 
   ingress {
     protocol   = "tcp"
     rule_no    = 100
     action     = "allow"
-    #cidr_block = "18.119.125.54/32"
-    cidr_block = "0.0.0.0/0"
+    cidr_block = var.vpn_ip
+    #cidr_block = "0.0.0.0/0"
     from_port  = 22
     to_port    = 22
   }
 
   ingress {
-    protocol   = "-1"
-    rule_no    = 99
+    protocol   = "tcp"
+    rule_no    = 101
     action     = "allow"
-    #cidr_block = "18.119.125.54/32"
     cidr_block = "0.0.0.0/0"
-    from_port  = 0
-    to_port    = 0
+    from_port  = 1024
+    to_port    = 65535
   }
 
   egress {
-    protocol   = "-1"
+    protocol   = "tcp"
     rule_no    = 200
     action     = "allow"
-    cidr_block = "0.0.0.0/0"
-    from_port  = 0
-    to_port    = 0
+    cidr_block = var.vpn_ip
+    from_port  = 1024
+    to_port    = 65535
   }
 
   egress {
@@ -352,9 +357,27 @@ resource "aws_network_acl" "main_bastion_nacl" {
     to_port    = 22
   }
 
+  egress {
+    protocol   = "tcp"
+    rule_no    = 202
+    action     = "allow"
+    cidr_block = "0.0.0.0/0"
+    from_port  = 443
+    to_port    = 443
+  }
+
+  egress {
+    protocol   = "tcp"
+    rule_no    = 203
+    action     = "allow"
+    cidr_block = "0.0.0.0/0"
+    from_port  = 80
+    to_port    = 80
+  }
+
 
   tags = {
-    Name                                          = var.bastion_nacl
+    Name                                          = "${var.vpc_name}_bastion_nacl"
     Env                                           = var.env
     "kubernetes.io/cluster/${local.cluster_name}" = "shared"
   }
@@ -406,25 +429,102 @@ resource "aws_network_acl" "main_public_nacl" {
   }
 
   ingress {
-    protocol   = "-1"
+    protocol   = "tcp"
     rule_no    = 105
     action     = "allow"
     cidr_block = "0.0.0.0/0"
-    from_port  = 0
-    to_port    = 0
+    from_port  = 1024
+    to_port    = 65535
+  }
+
+  ingress {
+    protocol   = "udp"
+    rule_no    = 106
+    action     = "allow"
+    cidr_block = aws_vpc.main_vpc.cidr_block
+    from_port  = 1024
+    to_port    = 65535
+  }
+
+
+  ingress {
+    protocol   = "udp"
+    rule_no    = 107
+    action     = "allow"
+    cidr_block = aws_vpc.main_vpc.cidr_block
+    from_port  = 53
+    to_port    = 53
+  }
+
+  ingress {
+    protocol   = "tcp"
+    rule_no    = 108
+    action     = "allow"
+    cidr_block = aws_vpc.main_vpc.cidr_block
+    from_port  = 53
+    to_port    = 53
+  }
+
+
+
+
+
+  egress {
+    protocol   = "tcp"
+    rule_no    = 201
+    action     = "allow"
+    cidr_block = "0.0.0.0/0"
+    from_port  = 80
+    to_port    = 80
   }
 
   egress {
-    protocol   = "-1"
+    protocol   = "tcp"
     rule_no    = 202
     action     = "allow"
     cidr_block = "0.0.0.0/0"
-    from_port  = 0
-    to_port    = 0
+    from_port  = 443
+    to_port    = 443
   }
 
+  egress {
+    protocol   = "tcp"
+    rule_no    = 203
+    action     = "allow"
+    cidr_block = "0.0.0.0/0"
+    from_port  = 1024
+    to_port    = 65535
+  }
+
+  egress {
+    protocol   = "udp"
+    rule_no    = 204
+    action     = "allow"
+    cidr_block = aws_vpc.main_vpc.cidr_block
+    from_port  = 1024
+    to_port    = 65535
+  }
+
+  egress {
+    protocol   = "tcp"
+    rule_no    = 205
+    action     = "allow"
+    cidr_block = aws_vpc.main_vpc.cidr_block
+    from_port  = 53
+    to_port    = 53
+  }
+  egress {
+    protocol   = "udp"
+    rule_no    = 206
+    action     = "allow"
+    cidr_block = aws_vpc.main_vpc.cidr_block
+    from_port  = 53
+    to_port    = 53
+  }
+
+
   tags = {
-    Name                                          = var.public_nacl
+    Name                                          = "${var.vpc_name}_public_nacl"
     Env                                           = var.env
     "kubernetes.io/cluster/${local.cluster_name}" = "shared"
   }
@@ -435,25 +535,55 @@ resource "aws_network_acl" "main_private_app_nacl" {
 
   ingress {
     protocol   = "tcp"
-    rule_no    = 106
-    action     = "allow"
-    cidr_block = "10.50.11.0/24"
-    from_port  = 7000
-    to_port    = 7000
-  }
-
-  ingress {
-    protocol   = "tcp"
-    rule_no    = 107
+    rule_no    = 101
     action     = "allow"
     cidr_block = "10.50.10.0/24"
+    #security_groups = [aws_security_group.bastion_sg.id]
     from_port  = 22
     to_port    = 22
   }
 
   ingress {
+    protocol   = "tcp"
+    rule_no    = 102
+    action     = "allow"
+    cidr_block = aws_vpc.main_vpc.cidr_block
+    from_port  = 8082
+    to_port    = 8082
+  }
+
+  ingress {
+    protocol   = "tcp"
+    rule_no    = 103
+    action     = "allow"
+    cidr_block = aws_vpc.main_vpc.cidr_block
+    from_port  = 9000
+    to_port    = 9000
+  }
+
+  ingress {
+    protocol   = "tcp"
+    rule_no    = 104
+    action     = "allow"
+    cidr_block = aws_vpc.main_vpc.cidr_block
+    from_port  = 9002
+    to_port    = 9002
+  }
+
+  ingress {
+    protocol   = "tcp"
+    rule_no    = 105
+    action     = "allow"
+    cidr_block = aws_vpc.main_vpc.cidr_block
+    from_port  = 9003
+    to_port    = 9003
+  }
+
+
+
+  ingress {
     #description = "Allow EKS control plane to communicate with nodes"
-    rule_no    = 108
+    rule_no    = 106
     action     = "allow"
     from_port   = 10250
     to_port     = 10250
@@ -463,7 +593,7 @@ resource "aws_network_acl" "main_private_app_nacl" {
 
   ingress {
     #description = "Allow EKS API server to communicate with nodes"
-    rule_no    = 109
+    rule_no    = 107
     action     = "allow"
     from_port   = 443
     to_port     = 443
@@ -472,25 +602,98 @@ resource "aws_network_acl" "main_private_app_nacl" {
   }
 
   ingress {
-    protocol   = "-1"
-    rule_no    = 110
+    protocol   = "tcp"
+    rule_no    = 108
     action     = "allow"
     cidr_block = "0.0.0.0/0"
-    from_port  = 0
-    to_port    = 0
+    from_port  = 1024
+    to_port    = 65535
+  }
+
+  ingress {
+    protocol   = "udp"
+    rule_no    = 109
+    action     = "allow"
+    cidr_block = aws_vpc.main_vpc.cidr_block
+    from_port  = 1024
+    to_port    = 65535
+  }
+
+
+  ingress {
+    protocol   = "udp"
+    rule_no    = 110
+    action     = "allow"
+    cidr_block = aws_vpc.main_vpc.cidr_block
+    from_port  = 53
+    to_port    = 53
+  }
+
+  ingress {
+    protocol   = "tcp"
+    rule_no    = 111
+    action     = "allow"
+    cidr_block = aws_vpc.main_vpc.cidr_block
+    from_port  = 53
+    to_port    = 53
+  }
+
+
+  egress {
+    protocol   = "tcp"
+    rule_no    = 201
+    action     = "allow"
+    cidr_block = "0.0.0.0/0"
+    from_port  = 80
+    to_port    = 80
   }
 
   egress {
-    protocol   = "-1"
+    protocol   = "tcp"
     rule_no    = 202
     action     = "allow"
     cidr_block = "0.0.0.0/0"
-    from_port  = 0
-    to_port    = 0
+    from_port  = 443
+    to_port    = 443
+  }
+
+  egress {
+    protocol   = "tcp"
+    rule_no    = 203
+    action     = "allow"
+    cidr_block = "0.0.0.0/0"
+    from_port  = 1024
+    to_port    = 65535
+  }
+
+  egress {
+    protocol   = "udp"
+    rule_no    = 204
+    action     = "allow"
+    cidr_block = aws_vpc.main_vpc.cidr_block
+    from_port  = 1024
+    to_port    = 65535
+  }
+
+  egress {
+    protocol   = "tcp"
+    rule_no    = 205
+    action     = "allow"
+    cidr_block = aws_vpc.main_vpc.cidr_block
+    from_port  = 53
+    to_port    = 53
+  }
+  egress {
+    protocol   = "udp"
+    rule_no    = 206
+    action     = "allow"
+    cidr_block = aws_vpc.main_vpc.cidr_block
+    from_port  = 53
+    to_port    = 53
   }
 
   tags = {
-    Name                                          = var.private_app_nacl
+    Name                                          = "${var.vpc_name}_private_app_nacl"
     Env                                           = var.env
     "kubernetes.io/cluster/${local.cluster_name}" = "shared"
   }
@@ -499,31 +702,34 @@ resource "aws_network_acl" "main_private_app_nacl" {
 resource "aws_network_acl" "main_private_rds_nacl" {
   vpc_id = aws_vpc.main_vpc.id
 
+
   ingress {
     protocol   = "tcp"
-    rule_no    = 111
+    rule_no    = 101
     action     = "allow"
-    cidr_block = "10.50.21.0/24"
+    cidr_block = "10.50.10.0/24"
+    #security_groups = [aws_security_group.bastion_sg.id]
+    from_port  = 22
+    to_port    = 22
+  }
+
+  ingress {
+    protocol   = "tcp"
+    rule_no    = 102
+    action     = "allow"
+    #cidr_block = "10.50.21.0/24"
+    cidr_block  = aws_vpc.main_vpc.cidr_block
     from_port  = 3306
     to_port    = 3306
   }
 
   ingress {
     protocol   = "tcp"
-    rule_no    = 112
-    action     = "allow"
-    cidr_block = "10.50.10.0/24"
-    from_port  = 22
-    to_port    = 22
-  }
-
-  ingress {
-    protocol   = "-1"
-    rule_no    = 113
+    rule_no    = 103
     action     = "allow"
     cidr_block = "0.0.0.0/0"
-    from_port  = 0
-    to_port    = 0
+    from_port  = 1024
+    to_port    = 65535
   }
 
   egress {
@@ -536,7 +742,7 @@ resource "aws_network_acl" "main_private_rds_nacl" {
   }
 
   tags = {
-    Name                                          = var.private_rds_nacl
+    Name                                          = "${var.vpc_name}_private_rds_nacl"
     Env                                           = var.env
     "kubernetes.io/cluster/${local.cluster_name}" = "shared"
   }
@@ -579,15 +785,15 @@ resource "aws_network_acl_association" "private_rds_nacl_association_2" {
 
 resource "aws_security_group" "bastion_sg" {
 
-
+  name = "Bastion_SG"
   vpc_id      = aws_vpc.main_vpc.id
 
   ingress {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    #cidr_blocks      = [var.vpn_ip]
-    cidr_blocks      = ["0.0.0.0/0"]
+    cidr_blocks      = [var.vpn_ip]
+    #cidr_blocks      = ["0.0.0.0/0"]
   }
 
   egress {
@@ -599,7 +805,7 @@ resource "aws_security_group" "bastion_sg" {
   }
 
   tags = {
-    Name                                          = var.bastion_sg_name
+    Name                                          = "${var.vpc_name}_bastion_sg"
     Env                                           = var.env
     "kubernetes.io/cluster/${local.cluster_name}" = "shared"
   }
@@ -607,11 +813,10 @@ resource "aws_security_group" "bastion_sg" {
 
 
 
-
-
 ##-----------------bastion ec2 Deployement-----------------------------------------
 
 resource "aws_instance" "bastion_instance" {
+
   ami                    = var.bastion_ami_id                       # Replace with the AMI ID you want to use
   instance_type          = var.bastion_instance_type                # Replace with your desired instance type (e.g., "t2.micro")
   subnet_id              = aws_subnet.main_bastion_subnet.id # This refers to the Bastion subnet you defined earlier

@@ -11,65 +11,6 @@
 #}
 
 
-#module "vpc" {
-#  source = "./module/eks" # Adjust this path if your VPC module is in a different directory
-#
-#  vpc_cidr_block = var.vpc_cidr_block
-#
-#  bastion_subnet_name = var.bastion_subnet_name
-#  bastion_subnet_cidr = var.bastion_subnet_cidr
-#
-#  public_subnet_1_name = var.public_subnet_1_name
-#  public_subnet_1_cidr = var.public_subnet_1_cidr
-#
-#  public_subnet_2_name = var.public_subnet_2_name
-#  public_subnet_2_cidr = var.public_subnet_2_cidr
-#
-#  private_app_subnet_1_name = var.private_app_subnet_1_name
-#  private_app_subnet_1_cidr = var.private_app_subnet_1_cidr
-#
-#  private_app_subnet_2_name = var.private_app_subnet_2_name
-#  private_app_subnet_2_cidr = var.private_app_subnet_2_cidr
-#
-#  private_rds_subnet_1_name = var.private_rds_subnet_1_name
-#  private_rds_subnet_1_cidr = var.private_rds_subnet_1_cidr
-#
-#  private_rds_subnet_2_name = var.private_rds_subnet_2_name
-#  private_rds_subnet_2_cidr = var.private_rds_subnet_2_cidr
-#
-#  bastion_nacl     = var.bastion_nacl
-#  public_nacl      = var.public_nacl
-#  private_app_nacl = var.private_app_nacl
-#  private_rds_nacl = var.private_rds_nacl
-#
-#
-#  public_rt    = var.public_rt
-#  private_rt_1 = var.private_rt_1
-#  private_rt_2 = var.private_rt_2
-#  nat_gw_1     = var.nat_gw_1
-#  nat_gw_2     = var.nat_gw_2
-#  eip_1        = var.eip_1
-#  eip_2        = var.eip_2
-#
-#  vpc_name     = var.vpc_name
-#  vpc_tenancy  = var.vpc_tenancy
-#  env          = var.env
-#  igw_name     = var.igw_name
-#  cluster_name = var.cluster_name
-#
-#  bastion_sg_name       = var.bastion_sg_name
-#  bastion_ami_id        = var.bastion_ami_id
-#  bastion_instance_name = var.bastion_instance_name
-#  Bastion_key_name      = var.Bastion_key_name
-#  bastion_instance_type = var.bastion_instance_type
-#  vpn_ip                = var.vpn_ip
-#
-#  frontend_node_group_ami = var.frontend_node_group_ami
-#  backend_node_group_ami  = var.backend_node_group_ami
-#
-#}
-#
-#
 resource "aws_eks_cluster" "main_eks_cluster" {
   name     = var.cluster_name
   role_arn = aws_iam_role.eks_cluster_role.arn
@@ -87,34 +28,6 @@ resource "aws_eks_cluster" "main_eks_cluster" {
   }
 }
 
-## Frontend Node Group
-#resource "aws_eks_node_group" "frontend_node_group" {
-#  cluster_name    = aws_eks_cluster.main_eks_cluster.name
-#  node_group_name = "frontend-node-group"
-#  node_role_arn   = aws_iam_role.eks_node_role.arn
-#  subnet_ids      = [aws_subnet.main_public_subnet_1.id,aws_subnet.main_public_subnet_2.id] # Public subnets
-#  #subnet_ids     = [module.vpc.main_public_subnet_1,module.vpc.main_public_subnet_1] # Public subnets
-#
-#
-#  launch_template {
-#    id      = aws_launch_template.frontend_launch_template.id
-#    version = "$Latest"
-#  }
-#
-#  scaling_config {
-#    desired_size = 2
-#    min_size     = 2
-#    max_size     = 4
-#  }
-#
-#  instance_types = ["t3.medium"]  # Instance type for frontend
-#
-#  tags = {
-#    Name = "frontend-node-group"
-#    Env  = var.env
-#    "kubernetes.io/cluster/${local.cluster_name}" = "owned"
-#  }
-#}
 
 # Frontend Node Group - Managed Node Group
 resource "aws_eks_node_group" "frontend_node_group" {
@@ -122,6 +35,12 @@ resource "aws_eks_node_group" "frontend_node_group" {
   node_group_name = "frontend_node_group"
   node_role_arn   = aws_iam_role.eks_node_role.arn
   subnet_ids      = [aws_subnet.main_public_subnet_1.id, aws_subnet.main_public_subnet_2.id]
+
+  launch_template {
+    id      = aws_launch_template.frontend_launch_template.id
+    version = "$Latest"
+
+  }
 
   scaling_config {
     desired_size = 2
@@ -145,47 +64,15 @@ resource "aws_eks_node_group" "frontend_node_group" {
   capacity_type = "ON_DEMAND" # Can also be "SPOT" for spot instances
 
   # Optional: Disk size for nodes (in GiB)
-  disk_size = 20
+  #disk_size = 20
 
   update_config {
     max_unavailable = 1
   }
 
-  # Optional: Remote access configuration (for SSH access to nodes)
-  remote_access {
-    ec2_ssh_key              = var.node_ssh_key_name
-    source_security_group_ids = [aws_security_group.eks_frontend_node_group_sg.id]
-  }
+
 }
 
-## Backend Node Group
-#resource "aws_eks_node_group" "backend_node_group" {
-#  cluster_name    = aws_eks_cluster.main_eks_cluster.name
-#  node_group_name = "backend-node-group"
-#  node_role_arn   = aws_iam_role.eks_node_role.arn
-#  subnet_ids      = [aws_subnet.main_private_app_subnet_1.id,aws_subnet.main_private_app_subnet_2.id]  # Private subnets
-#  #subnet_ids     = [module.vpc.main_private_app_subnet_1,module.vpc.main_private_app_subnet_2]
-#
-#  launch_template {
-#    id      = aws_launch_template.backend_launch_template.id
-#    version = "$Latest"
-#  }
-#
-#
-#  scaling_config {
-#    desired_size = 4
-#    min_size     = 2
-#    max_size     = 6
-#  }
-#
-#  instance_types = ["t3.large"]  # Instance type for backend
-#
-#  tags = {
-#    Name = "backend-node-group"
-#    Env  = var.env
-#    "kubernetes.io/cluster/${local.cluster_name}" = "owned"
-#  }
-#}
 
 # Backend Node Group - Managed Node Group
 resource "aws_eks_node_group" "backend_node_group" {
@@ -193,6 +80,12 @@ resource "aws_eks_node_group" "backend_node_group" {
   node_group_name = "backend-node-group"
   node_role_arn   = aws_iam_role.eks_node_role.arn
   subnet_ids      = [aws_subnet.main_private_app_subnet_1.id, aws_subnet.main_private_app_subnet_2.id]
+
+  launch_template {
+    id      = aws_launch_template.backend_launch_template.id
+    version = "$Latest"
+
+  }
 
   scaling_config {
     desired_size = 4
@@ -215,17 +108,13 @@ resource "aws_eks_node_group" "backend_node_group" {
   capacity_type = "ON_DEMAND" # Can also be "SPOT" for spot instances
 
   # Optional: Disk size for nodes (in GiB)
-  disk_size = 20
+  #disk_size = 20
 
   update_config {
     max_unavailable = 1
   }
 
-  # Optional: Remote access configuration (for SSH access to nodes)
-  remote_access {
-    ec2_ssh_key              = var.node_ssh_key_name
-    source_security_group_ids = [aws_security_group.eks_backend_node_group_sg.id]
-  }
+
 }
 
 
@@ -243,6 +132,10 @@ resource "aws_iam_role" "eks_cluster_role" {
       Action = "sts:AssumeRole"
     }]
   })
+
+  managed_policy_arns = [
+    "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+  ]
 }
 
 # IAM Role for EKS Node Groups
@@ -267,25 +160,39 @@ resource "aws_iam_role" "eks_node_role" {
   ]
 }
 
-resource "aws_iam_role_policy_attachment" "eks_cluster_policy" {
-  role       = aws_iam_role.eks_cluster_role.name
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+# Additional Inline Policy for EFS Access
+resource "aws_iam_policy" "efs_access_policy" {
+  name        = "EKSNodeEFSAccessPolicy"
+  description = "Policy to allow EKS nodes to access EFS"
+  policy      = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect = "Allow"
+      Action = [
+        "elasticfilesystem:DescribeAccessPoints",
+        "elasticfilesystem:DescribeFileSystems",
+        "elasticfilesystem:DescribeMountTargets",
+        "elasticfilesystem:CreateAccessPoint",
+        "elasticfilesystem:CreateFileSystem",
+        "elasticfilesystem:DeleteAccessPoint",
+        "elasticfilesystem:DeleteFileSystem",
+        "elasticfilesystem:ListTagsForResource",
+        "elasticfilesystem:TagResource",
+        "elasticfilesystem:UntagResource",
+        "elasticfilesystem:UpdateFileSystem",
+      ]
+      Resource = "*"
+    }]
+  })
 }
-## VPC Setup (Example)
-#module "vpc" {
-#  source  = "terraform-aws-modules/vpc/aws"
-#  version = "2.0.0"
-#
-#  name = "my-vpc"
-#
-#  cidr = "10.0.0.0/16"
-#
-#  azs             = ["us-west-2a", "us-west-2b"]
-#  public_subnets  = ["10.0.1.0/24", "10.0.2.0/24"]
-#  private_subnets = ["10.0.3.0/24", "10.0.4.0/24"]
-#
-#  enable_nat_gateway = true
-#}
+
+# Attach the EFS Access Policy to the Node Role
+resource "aws_iam_role_policy_attachment" "attach_efs_policy" {
+  policy_arn = aws_iam_policy.efs_access_policy.arn
+  role       = aws_iam_role.eks_node_role.name
+}
+
+
 
 resource "aws_security_group" "eks_cluster_sg" {
   name        = "eks-cluster-sg"
@@ -337,11 +244,32 @@ resource "aws_security_group" "eks_frontend_node_group_sg" {
   #vpc_id      = module.vpc.main_vpc
 
   ingress {
+
+    description = "Allow ssh communication"
+    protocol   = "tcp"
+    #cidr_block = "10.50.10.0/24"
+    security_groups = [aws_security_group.bastion_sg.id]
+    from_port  = 22
+    to_port    = 22
+  }
+
+  ingress {
+
     description = "Allow EKS API server to communicate with nodes"
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
-    cidr_blocks = [aws_vpc.main_vpc.cidr_block]  # Replace with the correct CIDR block
+    cidr_blocks = ["0.0.0.0/0"]  # Replace with the correct CIDR block
+    #cidr_blocks = [module.vpc.vpc_cidr_block]
+  }
+
+  ingress {
+
+    description = "Allow EKS API server to communicate with nodes"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"] # Replace with the correct CIDR block
     #cidr_blocks = [module.vpc.vpc_cidr_block]
   }
 
@@ -355,30 +283,27 @@ resource "aws_security_group" "eks_frontend_node_group_sg" {
   }
 
   ingress {
-    description = "Allow intra-node communication"
-    from_port   = 10250
-    to_port     = 10250
-    protocol    = "tcp"
-    self        = true
+    description = "Allow coredns communications within cluster"
+    protocol   = "udp"
+    from_port  = 53
+    to_port    = 53
+    cidr_blocks = [aws_vpc.main_vpc.cidr_block]
   }
 
   ingress {
-    description = "Allow intra-node communication"
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    self        = true
-    cidr_blocks =[aws_subnet.main_bastion_subnet.cidr_block]
-    #cidr_blocks = [module.vpc.bastion_subnet_cidr]
+    description = "Allow coredns communications within cluster"
+    protocol   = "tcp"
+    from_port  = 53
+    to_port    = 53
+    cidr_blocks = [aws_vpc.main_vpc.cidr_block]
   }
 
   ingress {
-    protocol   = "-1"
-    # rule_no    = 103
-    #action     = "allow"
-    cidr_blocks = ["0.0.0.0/0"]
-    from_port  = 0
-    to_port    = 0
+    description = "Allow coredns communications within cluster"
+    protocol   = "tcp"
+    from_port  = 30000
+    to_port    = 32762
+    cidr_blocks = [aws_vpc.main_vpc.cidr_block]
   }
 
   egress {
@@ -386,6 +311,12 @@ resource "aws_security_group" "eks_frontend_node_group_sg" {
     to_port     = 0
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "eks-frontend_node-sg"
+    Env  = var.env
+    "kubernetes.io/cluster/${local.cluster_name}" = "owned"
   }
 }
 
@@ -425,22 +356,109 @@ resource "aws_security_group" "eks_backend_node_group_sg" {
   }
 
   ingress {
-    description = "Allow intra-node communication"
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    self        = true
-    cidr_blocks =[aws_subnet.main_bastion_subnet.cidr_block]
-    #cidr_blocks = [module.vpc.bastion_subnet_cidr]
+
+    description = "Allow ssh communication"
+    protocol   = "tcp"
+    #cidr_block = "10.50.10.0/24"
+    security_groups = [aws_security_group.bastion_sg.id]
+    from_port  = 22
+    to_port    = 22
   }
 
   ingress {
-    protocol   = "-1"
-    # rule_no    = 103
-    #action     = "allow"
-    cidr_blocks = ["0.0.0.0/0"]
-    from_port  = 0
-    to_port    = 0
+    description = "Allow proxy service communication"
+    protocol   = "tcp"
+    cidr_blocks = [aws_vpc.main_vpc.cidr_block]
+    from_port  = 8082
+    to_port    = 8082
+  }
+
+  ingress {
+    description = "Allow auth service communication"
+    protocol   = "tcp"
+    cidr_blocks = [aws_vpc.main_vpc.cidr_block]
+    from_port  = 9000
+    to_port    = 9000
+  }
+
+  ingress {
+    description = "Allow  vp service communication"
+    protocol   = "tcp"
+    cidr_blocks = [aws_vpc.main_vpc.cidr_block]
+    from_port  = 9002
+    to_port    = 9002
+  }
+
+  ingress {
+    description = "Allow umm service communication"
+    protocol   = "tcp"
+    cidr_blocks = [aws_vpc.main_vpc.cidr_block]
+    from_port  = 9003
+    to_port    = 9003
+  }
+
+  ingress {
+    description = "Allow tenant service communication"
+    protocol   = "tcp"
+    cidr_blocks = [aws_vpc.main_vpc.cidr_block]
+    from_port  = 9004
+    to_port    = 9004
+  }
+
+  ingress {
+    description = "Allow integration service communication"
+    protocol   = "tcp"
+    cidr_blocks = [aws_vpc.main_vpc.cidr_block]
+    from_port  = 9006
+    to_port    = 9006
+  }
+
+  ingress {
+    description = "Allow common service communication"
+    protocol   = "tcp"
+    cidr_blocks = [aws_vpc.main_vpc.cidr_block]
+    from_port  = 9008
+    to_port    = 9008
+  }
+
+  ingress {
+    description = "Allow message service communication"
+    protocol   = "tcp"
+    cidr_blocks = [aws_vpc.main_vpc.cidr_block]
+    from_port  = 5020
+    to_port    = 5020
+  }
+
+  ingress {
+    description = "Allow payment service communication"
+    protocol   = "tcp"
+    cidr_blocks = [aws_vpc.main_vpc.cidr_block]
+    from_port  = 5060
+    to_port    = 5060
+  }
+
+  ingress {
+    description = "Allow coredns communications within cluster"
+    protocol   = "udp"
+    from_port  = 53
+    to_port    = 53
+    cidr_blocks = [aws_vpc.main_vpc.cidr_block]
+  }
+
+  ingress {
+    description = "Allow coredns communications within cluster"
+    protocol   = "tcp"
+    from_port  = 53
+    to_port    = 53
+    cidr_blocks = [aws_vpc.main_vpc.cidr_block]
+  }
+
+  ingress {
+    description = "Allow EKS worker nodes to communicate with EFS via NFS"
+    protocol   = "tcp"
+    from_port  = 2049
+    to_port    = 2049
+    cidr_blocks = [aws_vpc.main_vpc.cidr_block]
   }
 
   egress {
@@ -449,43 +467,50 @@ resource "aws_security_group" "eks_backend_node_group_sg" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  tags = {
+    Name = "eks-backend_node-sg"
+    Env  = var.env
+    "kubernetes.io/cluster/${local.cluster_name}" = "owned"
+  }
+
 }
 
+resource "aws_launch_template" "frontend_launch_template" {
+  name          = "frontend-node-launch-template"
+  #image_id      = var.frontend_node_group_ami  # Use the appropriate AMI
+  #instance_type = "t3.medium"
+  key_name      = var.node_ssh_key_name
 
 
-#resource "aws_launch_template" "frontend_launch_template" {
-#  name          = "frontend-node-launch-template"
-#  image_id      = var.frontend_node_group_ami  # Use the appropriate AMI
-#  #instance_type = "t3.medium"
-#  key_name      = var.Bastion_key_name
-#
-#  network_interfaces {
-#    security_groups = [aws_security_group.eks_frontend_node_group_sg.id]  # Attach security group here
-#  }
-#
-#  tags = {
-#    Name = "frontend_launch_template"
-#    Env  = var.env
-#    "kubernetes.io/cluster/${local.cluster_name}" = "owned"
-#  }
-#}
+  network_interfaces {
+    security_groups = [aws_security_group.eks_frontend_node_group_sg.id]  # Attach security group here
+  }
 
-#resource "aws_launch_template" "backend_launch_template" {
-#  name     = "backend-node-launch-template"
-#  image_id = var.backend_node_group_ami  # Use the appropriate AMI
-#  #instance_type = "t3.large"
-#  key_name = var.Bastion_key_name
-#
-#  network_interfaces {
-#    security_groups = [aws_security_group.eks_backend_node_group_sg.id]  # Attach security group here
-#  }
-#
-#  tags = {
-#    Name                                          = "backend_launch_template"
-#    Env                                           = var.env
-#    "kubernetes.io/cluster/${local.cluster_name}" = "owned"
-#  }
-#}
+  tags = {
+    Name = "${aws_eks_cluster.main_eks_cluster.name}-frontend-node"
+    Env  = var.env
+    "kubernetes.io/cluster/${local.cluster_name}" = "owned"
+  }
+}
+
+resource "aws_launch_template" "backend_launch_template" {
+  name     = "backend-node-launch-template"
+  #image_id = var.backend_node_group_ami  # Use the appropriate AMI
+  #instance_type = "t3.large"
+  key_name = var.node_ssh_key_name
+
+
+  network_interfaces {
+    security_groups = [aws_security_group.eks_backend_node_group_sg.id]  # Attach security group here
+  }
+
+  tags = {
+    Name = "${aws_eks_cluster.main_eks_cluster.name}-backend-node"
+    Env                                           = var.env
+    "kubernetes.io/cluster/${local.cluster_name}" = "owned"
+  }
+}
 
 #resource "kubernetes_config_map" "aws_auth" {
 #  metadata {
