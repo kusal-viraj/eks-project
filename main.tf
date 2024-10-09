@@ -32,22 +32,22 @@ module "vpc" {
 }
 
 
-module "eks" {
-  source = "./module/eks"
-
-  # Pass the required variables.tf to the eks module
-
-
-  cluster_name       = var.cluster_name
-  vpc_name     = var.vpc_name
-  vpc_tenancy  = var.vpc_tenancy
-  env          = var.env
-
-
-
-  # Any other variables.tf specific to the EKS module
-  node_ssh_key_name = var.node_ssh_key_name
-
-}
+#module "eks" {
+#  source = "./module/eks"
+#
+#  # Pass the required variables.tf to the eks module
+#
+#
+#  cluster_name       = var.cluster_name
+#  vpc_name     = var.vpc_name
+#  vpc_tenancy  = var.vpc_tenancy
+#  env          = var.env
+#
+#
+#
+#  # Any other variables.tf specific to the EKS module
+#  node_ssh_key_name = var.node_ssh_key_name
+#
+#}
 
 
