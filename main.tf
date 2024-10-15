@@ -50,4 +50,34 @@ module "vpc" {
 #
 #}
 
+module "rds" {
+  source = "./module/rds"
 
+  vpc_id                 = module.vpc.vpc_id                 # Obtained from VPC module output
+  private_rds_subnet_ids = module.vpc.private_rds_subnet_ids # Obtained from VPC module output
+  backend_subnet_cidrs   = module.vpc.private_app_subnet
+  env                    = var.env
+  username               = var.db_username
+  password               = var.db_password
+  allocated_storage      = var.db_allocated_storage
+  engine                 = var.db_engine
+  engine_version         = var.db_engine_version
+  instance_class         = var.db_instance_class
+  port                   = var.db_port
+  multi_az               = var.db_multi_az
+  backup_retention       = var.db_backup_retention
+  storage_type           = var.db_storage_type
+  skip_final_snapshot    = var.final_snapshot
+  cluster_name           = var.cluster_name
+  snapshot_id            = var.snapshot
+}
+
+
+module "efs" {
+  source = "./module/efs"
+
+  efs_subnet_ids          = [module.vpc.private_app_subnet]
+  backend_nodegroup_sg_id = module.vpc.backend_nodegroup_sg_id
+  env                     = var.env
+
+}

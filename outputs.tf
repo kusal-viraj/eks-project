@@ -24,6 +24,13 @@
 #  value = aws_vpc.main_vpc.cidr_block
 #}
 #
-#output "bastion_subnet_cidr" {
-#  value = aws_subnet.bastion_subnet_cidr
-#}
+output "Bastion_Instance_Public_Ip" {
+  value = module.vpc.bastion_instance_public_ip
+}
+
+output "EFS_Filesystem_ID" {
+  value = module.efs.efs_file_system_id
+}
+
+
+

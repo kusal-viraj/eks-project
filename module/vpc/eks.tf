@@ -61,6 +61,8 @@ resource "aws_eks_node_group" "frontend_node_group" {
   }
 
 
+
+
   capacity_type = "ON_DEMAND" # Can also be "SPOT" for spot instances
 
   # Optional: Disk size for nodes (in GiB)
@@ -104,6 +106,7 @@ resource "aws_eks_node_group" "backend_node_group" {
   labels = {
     Name = "${var.cluster_name}_backend_node"
   }
+
 
   capacity_type = "ON_DEMAND" # Can also be "SPOT" for spot instances
 
@@ -476,6 +479,25 @@ resource "aws_security_group" "eks_backend_node_group_sg" {
 
 }
 
+resource "aws_security_group" "main_backend_node_rds_sg" {
+
+  name        = "${var.vpc_name}_backend_node_rds_sg"
+  description = "Security group for the EKS nodes to connect to rds"
+  vpc_id = aws_vpc.main_vpc.id
+
+  tags = {
+    Name = "${var.vpc_name}_backend_node_rds_sg"
+    Env  = var.env
+  }
+
+  egress {
+    from_port   = 3306
+    to_port     = 3306
+    protocol    = "tcp"
+    cidr_blocks = [aws_subnet.main_private_rds_subnet_1.cidr_block, aws_subnet.main_private_rds_subnet_2.cidr_block]
+  }
+}
+
 resource "aws_launch_template" "frontend_launch_template" {
   name          = "frontend-node-launch-template"
   #image_id      = var.frontend_node_group_ami  # Use the appropriate AMI
@@ -487,11 +509,17 @@ resource "aws_launch_template" "frontend_launch_template" {
     security_groups = [aws_security_group.eks_frontend_node_group_sg.id]  # Attach security group here
   }
 
-  tags = {
-    Name = "${aws_eks_cluster.main_eks_cluster.name}-frontend-node"
-    Env  = var.env
-    "kubernetes.io/cluster/${local.cluster_name}" = "owned"
+  # Propagate tags to EC2 instances
+  tag_specifications {
+    resource_type = "instance"
+
+    tags = {
+      Name = "${aws_eks_cluster.main_eks_cluster.name}-frontend-node"  # Ensures Name tag appears on EC2 instances
+      Env  = var.env
+      "kubernetes.io/cluster/${aws_eks_cluster.main_eks_cluster.name}" = "owned"
+    }
   }
+
 }
 
 resource "aws_launch_template" "backend_launch_template" {
@@ -502,13 +530,20 @@ resource "aws_launch_template" "backend_launch_template" {
 
 
   network_interfaces {
-    security_groups = [aws_security_group.eks_backend_node_group_sg.id]  # Attach security group here
+    security_groups = [aws_security_group.eks_backend_node_group_sg.id, aws_security_group.main_backend_node_rds_sg.id]
+    # Attach security group here
   }
 
-  tags = {
-    Name = "${aws_eks_cluster.main_eks_cluster.name}-backend-node"
-    Env                                           = var.env
-    "kubernetes.io/cluster/${local.cluster_name}" = "owned"
+  # Propagate tags to EC2 instances
+  tag_specifications {
+    resource_type = "instance"
+
+    tags = {
+      Name                                                             = "${aws_eks_cluster.main_eks_cluster.name}-backend-node"
+      # Ensures Name tag appears on EC2 instances
+      Env                                                              = var.env
+      "kubernetes.io/cluster/${aws_eks_cluster.main_eks_cluster.name}" = "owned"
+    }
   }
 }
 

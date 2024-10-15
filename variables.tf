@@ -25,140 +25,53 @@ variable "vpc_tenancy" {
   description = "Tenancy of the VPC (default, dedicated)"
 }
 
-variable "igw_name" {
-  type        = string
-  description = "Internet gateway name"
-}
 
-variable "bastion_subnet_name" {
-  type        = string
-  description = "public subnet"
-}
 
 variable "bastion_subnet_cidr" {
   type        = string
   description = "public subnet"
 }
 
-variable "public_subnet_1_name" {
-  type        = string
-  description = "public subnet"
-}
+
 
 variable "public_subnet_1_cidr" {
   type        = string
   description = "public subnet"
 }
 
-variable "public_subnet_2_name" {
-  type        = string
-  description = "public subnet"
-}
+
 
 variable "public_subnet_2_cidr" {
   type        = string
   description = "public subnet"
 }
 
-variable "private_app_subnet_1_name" {
-  type        = string
-  description = "public subnet"
-}
 
 variable "private_app_subnet_1_cidr" {
   type        = string
   description = "public subnet"
 }
 
-variable "private_app_subnet_2_name" {
-  type        = string
-  description = "public subnet"
-}
+
 
 variable "private_app_subnet_2_cidr" {
   type        = string
   description = "public subnet"
 }
 
-variable "private_rds_subnet_1_name" {
-  type        = string
-  description = "public subnet"
-}
+
 
 variable "private_rds_subnet_1_cidr" {
   type        = string
   description = "public subnet"
 }
 
-variable "private_rds_subnet_2_name" {
-  type        = string
-  description = "public subnet"
-}
 
 variable "private_rds_subnet_2_cidr" {
   type        = string
   description = "public subnet"
 }
 
-variable "nat_gw_1" {
-  type        = string
-  description = "Nat Gateway"
-}
-
-variable "nat_gw_2" {
-  type        = string
-  description = "Nat Gateway"
-}
-
-variable "public_rt" {
-  type        = string
-  description = "Route tables for public subnet"
-}
-
-variable "private_rt_1" {
-  type        = string
-  description = "Route tables for private subnet"
-}
-
-variable "private_rt_2" {
-  type        = string
-  description = "Route tables for private subnet"
-}
-
-variable "eip_1" {
-  type        = string
-  description = "Route tables for private subnet"
-}
-
-variable "eip_2" {
-  type        = string
-  description = "Route tables for private subnet"
-}
-
-variable "public_nacl" {
-  type        = string
-  description = "NACL for public subnet"
-}
-
-variable "bastion_nacl" {
-  type        = string
-  description = "NACL for public subnet"
-}
-
-variable "private_app_nacl" {
-  type        = string
-  description = "NACL for public subnet"
-}
-
-variable "private_rds_nacl" {
-  type        = string
-  description = "NACL for public subnet"
-}
-
-variable "bastion_sg_name" {
-  type        = string
-  description = "security group for the bastion host"
-}
 
 variable "vpn_ip" {
   type        = string
@@ -197,6 +110,84 @@ variable "backend_node_group_ami" {
 }
 
 variable "node_ssh_key_name" {
-  type = string
+  type        = string
   description = "IP of the vpn"
 }
+
+
+#====RDS Module=========================================================================
+
+variable "db_username" {
+  description = "The master username for the database"
+  type        = string
+}
+
+variable "db_password" {
+  description = "The master password for the database"
+  type        = string
+}
+
+variable "db_allocated_storage" {
+  description = "Size of the RDS instance storage (in GB)"
+  type        = number
+  default     = 20
+}
+
+variable "db_engine" {
+  description = "The database engine (e.g., mysql, postgres)"
+  type        = string
+  default     = "mariadb"
+}
+
+variable "snapshot" {
+  description = "The database engine (e.g., mysql, postgres)"
+  type        = string
+  default     = "mariadb"
+}
+
+
+variable "db_engine_version" {
+  description = "The database engine (e.g., mysql, postgres)"
+  type        = string
+  default     = "10.11.4"
+}
+
+
+variable "db_instance_class" {
+  description = "The instance class (e.g., db.t3.micro, db.t3.medium)"
+  type        = string
+  default     = "db.t3.micro"
+}
+
+variable "db_port" {
+  description = "The port for the RDS instance"
+  type        = number
+  default     = 5432
+}
+
+variable "db_multi_az" {
+  description = "Whether to deploy the RDS instance in multiple AZs"
+  type        = bool
+  default     = false
+}
+
+variable "db_backup_retention" {
+  description = "The number of days to retain backups"
+  type        = number
+  default     = 7
+}
+
+variable "db_storage_type" {
+  description = "The storage type (e.g., gp2, io1)"
+  type        = string
+  default     = "gp2"
+}
+
+variable "final_snapshot" {
+  description = "Whether to create final snapshot of the RDS instance"
+  type        = bool
+  default     = true
+}
+
+
+#==================================================================================
