@@ -6,8 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="e639d97a-9c8d-4167-b79c-dd7ad5e9807e" name="Changes" comment="reset">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.terraform/providers/registry.terraform.io/hashicorp/aws/5.62.0/windows_amd64/LICENSE.txt" beforeDir="false" afterPath="$PROJECT_DIR$/.terraform/providers/registry.terraform.io/hashicorp/aws/5.62.0/windows_amd64/LICENSE.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eks project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/eks project.iml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,7 +79,7 @@
       <workItem from="1724299446067" duration="12977000" />
       <workItem from="1724386527752" duration="33113000" />
       <workItem from="1724735313774" duration="4637000" />
-      <workItem from="1728972573503" duration="526000" />
+      <workItem from="1728972573503" duration="1541000" />
     </task>
     <task id="LOCAL-00001" summary="cvwrv">
       <created>1724659264717</created>
