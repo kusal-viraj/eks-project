@@ -25,6 +25,7 @@ resource "aws_eks_cluster" "main_eks_cluster" {
     # Cluster security group
     security_group_ids = [aws_security_group.eks_cluster_sg.id]
 
+
   }
 }
 
@@ -547,23 +548,35 @@ resource "aws_launch_template" "backend_launch_template" {
   }
 }
 
-#resource "kubernetes_config_map" "aws_auth" {
-#  metadata {
-#    name      = "aws-auth"
-#    namespace = "kube-system"
-#  }
-#
-#  data = {
-#    mapRoles = yamlencode({
-#      - rolearn: "${aws_iam_role.eks_node_role.arn}"
-#      username: "system:node:{{EC2PrivateDNSName}}"
-#      groups: [
-#        "system:bootstrappers",
-#        "system:nodes"
-#      ]
-#    })
-#  }
-#}
+resource "kubernetes_config_map" "aws_auth" {
+  depends_on = [aws_eks_cluster.main_eks_cluster]
 
+  metadata {
+    name      = "aws-auth"
+    namespace = "kube-system"
+  }
+
+  data = {
+    mapRoles = <<EOF
+- rolearn: ${aws_iam_role.eks_node_role.arn}
+  username: system:node:{{EC2PrivateDNS}}
+  groups:
+    - system:bootstrappers
+    - system:nodes
+EOF
+
+    mapUsers = <<EOF
+- userarn: arn:aws:iam::194978441177:user/viraj.a
+  username: viraj.a
+  groups:
+    - system:masters
+EOF
+  }
+
+  # Prevent Terraform from attempting to recreate this resource
+  lifecycle {
+    ignore_changes = all
+  }
+}
 
 

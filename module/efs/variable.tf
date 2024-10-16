@@ -15,7 +15,7 @@ variable "env" {
 }
 
 variable "backend_nodegroup_sg_id" {
-  type = string
+  type = list
   description = "Name of the backend sg"
 }
 

@@ -13,13 +13,13 @@ resource "aws_efs_file_system" "main_efs" {
   encrypted = true  # Encrypts the file system at rest
 
   # Backup policy
-  enable_backup_policy = true
+ # enable_backup_policy = true
 
   # Replication configuration
-  create_replication_configuration = true
-  replication_configuration_destination = {
-    region = "eu-west-2"
-  }
+#  #create_replication_configuration = true
+#  replication_configuration_destination = {
+#    region = "eu-west-2"
+#  }
 
   tags = {
     Name = "${var.env}-efs"
@@ -36,10 +36,6 @@ resource "aws_efs_mount_target" "main_mount_target" {
   subnet_id      = var.efs_subnet_ids[count.index]  # Attach mount target to each subnet
   security_groups = [aws_security_group.main_efs_sg.id]  # Security group for EFS
 
-  # Tags to identify the mount targets
-  tags = {
-    Name = "${var.env}-efs-mount-target-${count.index}"
-  }
 }
 
 # Step 4: Security Group for EFS Mount Targets
@@ -54,7 +50,7 @@ resource "aws_security_group" "main_efs_sg" {
     to_port     = 2049
     protocol    = "tcp"
     #cidr_blocks = ["10.0.0.0/16"]  # Replace with your VPC CIDR or allow only specific sources
-    security_group_id = var.backend_nodegroup_sg_id
+    security_groups = var.backend_nodegroup_sg_id
   }
 
   # Allow all egress traffic

@@ -76,8 +76,9 @@ module "rds" {
 module "efs" {
   source = "./module/efs"
 
-  efs_subnet_ids          = [module.vpc.private_app_subnet]
-  backend_nodegroup_sg_id = module.vpc.backend_nodegroup_sg_id
+  efs_subnet_ids          = module.vpc.private_app_subnet_ids
+  backend_nodegroup_sg_id = [module.vpc.backend_nodegroup_sg_id]
   env                     = var.env
+  vpc_id                  = module.vpc.vpc_id
 
 }

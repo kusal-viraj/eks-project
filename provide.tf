@@ -5,3 +5,14 @@ provider "aws" {
   region  = "us-east-2"
   profile = "Terraform_User"
 }
+
+
+provider "kubernetes" {
+  host                   = module.vpc.eks_cluster_endpoint
+  cluster_ca_certificate = base64decode(module.vpc.eks_cluster_certificate_authority)
+  token                  = data.aws_eks_cluster_auth.example.token
+}
+
+data "aws_eks_cluster_auth" "example" {
+  name = module.vpc.eks_cluster_name
+}

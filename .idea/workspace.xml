@@ -4,8 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e639d97a-9c8d-4167-b79c-dd7ad5e9807e" name="Changes" comment="reset">
+    <list default="true" id="e639d97a-9c8d-4167-b79c-dd7ad5e9807e" name="Changes" comment="modify git info">
+      <change afterPath="$PROJECT_DIR$/module/ALB/alb.tf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/module/ALB/variables.tf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.terraform.lock.hcl" beforeDir="false" afterPath="$PROJECT_DIR$/.terraform.lock.hcl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.tf" beforeDir="false" afterPath="$PROJECT_DIR$/main.tf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/module/efs/efs.tf" beforeDir="false" afterPath="$PROJECT_DIR$/module/efs/efs.tf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/module/efs/variable.tf" beforeDir="false" afterPath="$PROJECT_DIR$/module/efs/variable.tf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/module/vpc/eks.tf" beforeDir="false" afterPath="$PROJECT_DIR$/module/vpc/eks.tf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/module/vpc/outputs.tf" beforeDir="false" afterPath="$PROJECT_DIR$/module/vpc/outputs.tf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/provide.tf" beforeDir="false" afterPath="$PROJECT_DIR$/provide.tf" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,6 +26,9 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/module/vpc/vpc.tf" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="KubernetesApiPersistence">
+    <option name="context" value="arn:aws:eks:us-east-2:194978441177:cluster/dev_eks_cluster" />
   </component>
   <component name="ProjectId" id="2kY4T0YeaeOtOhkKgSLeOGqMSv7" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -79,7 +91,7 @@
       <workItem from="1724299446067" duration="12977000" />
       <workItem from="1724386527752" duration="33113000" />
       <workItem from="1724735313774" duration="4637000" />
-      <workItem from="1728972573503" duration="1541000" />
+      <workItem from="1728972573503" duration="19466000" />
     </task>
     <task id="LOCAL-00001" summary="cvwrv">
       <created>1724659264717</created>
@@ -109,7 +121,14 @@
       <option name="project" value="LOCAL" />
       <updated>1724661280659</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="modify git info">
+      <created>1728974265506</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1728974265506</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -130,6 +149,7 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="cvwrv" />
     <MESSAGE value="reset" />
-    <option name="LAST_COMMIT_MESSAGE" value="reset" />
+    <MESSAGE value="modify git info" />
+    <option name="LAST_COMMIT_MESSAGE" value="modify git info" />
   </component>
 </project>
