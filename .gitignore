@@ -1,1 +1,4 @@
 .terraform/providers/*
+Aws-Modules/env/testing/.terraform/*
+Aws-Modules/env/qa/.terraform/*
+
