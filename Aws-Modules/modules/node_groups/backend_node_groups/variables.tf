@@ -1,0 +1,23 @@
+variable  "env_name" {type = string}
+
+variable "cluster_name" {
+  type = string
+}
+
+variable "node_role_arn" {
+  type = string
+}
+
+variable "backend_private_subnet_az_01_id" {
+  type = string
+}
+
+variable "backend_private_subnet_az_02_id" {
+  type = string
+}
+
+
+variable "backend_launch_template_id" {
+  type = string
+}
+

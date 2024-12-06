@@ -1,0 +1,53 @@
+#!/bin/bash
+set -e
+
+# Update and install required dependencies
+sudo dnf update -y
+
+# Install containerd (container runtime)
+sudo dnf install -y containerd
+sudo systemctl enable containerd
+sudo systemctl start containerd
+
+# Configure containerd for Kubernetes
+sudo mkdir -p /etc/containerd
+containerd config default | sudo tee /etc/containerd/config.toml
+sudo systemctl restart containerd
+
+# Install Kubernetes components: kubelet, kube-proxy
+# Add Kubernetes yum repository
+cat <<EOF | sudo tee /etc/yum.repos.d/kubernetes.repo
+[kubernetes]
+name=Kubernetes
+baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-\$basearch
+enabled=1
+gpgcheck=1
+repo_gpgcheck=1
+gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+EOF
+
+# Install kubelet, kube-proxy, and kubectl (optional)
+sudo dnf install -y kubelet kube-proxy
+sudo systemctl enable kubelet
+
+# Install AWS CLI (v2)
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+
+# (Optional) Install SSM Agent
+sudo dnf install -y amazon-ssm-agent
+sudo systemctl enable amazon-ssm-agent
+sudo systemctl start amazon-ssm-agent
+
+# Fetch EKS Bootstrap script (if not pre-included in the AMI)
+if [ ! -f /etc/eks/bootstrap.sh ]; then
+  curl -o /etc/eks/bootstrap.sh https://s3.us-west-2.amazonaws.com/amazon-eks/bootstrap.sh
+  chmod +x /etc/eks/bootstrap.sh
+fi
+
+# Run the bootstrap script to join the EKS cluster
+sudo /etc/eks/bootstrap.sh "<cluster_name>"
+
+# Ensure services restart on reboot
+sudo systemctl restart kubelet containerd
