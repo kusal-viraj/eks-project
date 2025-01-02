@@ -5,129 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e639d97a-9c8d-4167-b79c-dd7ad5e9807e" name="Changes" comment="project update">
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/env/qa/.terraform.lock.hcl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/env/qa/ebs-attached.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/env/qa/ebs.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/env/qa/ec2-keys.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/env/qa/ec2.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/env/qa/eip.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/env/qa/nacl.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/env/qa/s3.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/env/qa/sg.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/env/qa/terraform.tfstate" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/env/qa/terraform.tfstate.backup" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/env/qa/terraform.tfvars" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/env/qa/variables.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/env/qa/vpc-igw.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/env/qa/vpc-main.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/env/qa/vpc-natgw.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/env/qa/vpc-route_tables.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/env/qa/vpc-subnets.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/env/testing/.terraform.lock.hcl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/env/testing/alb.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/env/testing/backend-node-group.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/env/testing/backend.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/env/testing/ec2-keys.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/env/testing/ec2.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/env/testing/efs.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/env/testing/eip.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/env/testing/eks.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/env/testing/frontend-node-group.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/env/testing/iam.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/env/testing/launch_templates.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/env/testing/nacl.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/env/testing/outputs.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/env/testing/provider.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/env/testing/qa-private-key.pem" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/env/testing/qa-public-key.pub" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/env/testing/rds.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/env/testing/sg.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/env/testing/terraform.tfvars" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/env/testing/variables.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/env/testing/vpc-igw.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/env/testing/vpc-main.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/env/testing/vpc-natgw.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/env/testing/vpc-route_tables.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/env/testing/vpc-subnets.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/alb/alb.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/alb/outputs.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/alb/variables.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/ebs-attached/main.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/ebs-attached/outputs.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/ebs-attached/variables.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/ebs/main.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/ebs/outputs.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/ebs/variables.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/ec2/main.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/ec2/outputs.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/ec2/user.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/ec2/variables.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/ecs-keys/main.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/ecs-keys/outputs.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/ecs-keys/variables.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/efs/efs.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/efs/outputs.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/efs/variables.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/eks/eks.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/eks/outputs.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/eks/variables.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/iam/cluster_role.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/iam/node_role.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/iam/outputs.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/iam/variables.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/launch_templates/backend_launchtemplate.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/launch_templates/frontend_launchtemplate.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/launch_templates/outputs.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/launch_templates/user.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/launch_templates/userdata.file" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/launch_templates/variables.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/node_groups/backend_node_groups/backend_nodegroup.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/node_groups/backend_node_groups/variables.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/node_groups/frontend_node_groups/frontend_nodegroup.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/node_groups/frontend_node_groups/variables.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/rds/outputs.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/rds/rds.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/rds/variables.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/s3/main.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/s3/outputs.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/s3/variables.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/vpc-eip/main.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/vpc-eip/outputs.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/vpc-eip/variables.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/vpc-igw/main.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/vpc-igw/outputs.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/vpc-igw/variables.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/vpc-nacl/App_subnet_nacl.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/vpc-nacl/Bastion_nacl.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/vpc-nacl/Public_subnet_nacl.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/vpc-nacl/RDS_Subnet_nacl.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/vpc-nacl/outputs.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/vpc-nacl/variables.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/vpc-natgw/main.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/vpc-natgw/outputs.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/vpc-natgw/variables.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/vpc-route_tables/main_bak" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/vpc-route_tables/outputs.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/vpc-route_tables/private_rt_1.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/vpc-route_tables/public_rt.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/vpc-route_tables/rt_association.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/vpc-route_tables/variables.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/vpc-security_groups/alb_sg.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/vpc-security_groups/backend_node_rds_sg.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/vpc-security_groups/backend_nodegroup_sg.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/vpc-security_groups/efs_sg.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/vpc-security_groups/eks_cluster_sg.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/vpc-security_groups/frontend_nodegroup_sg.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/vpc-security_groups/outputs.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/vpc-security_groups/rds_sg.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/vpc-security_groups/ssh_sg.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/vpc-security_groups/variables.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/vpc-subnets/main.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/vpc-subnets/outputs.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/vpc-subnets/variables.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/vpc/main.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/vpc/outputs.tf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Aws-Modules/modules/vpc/variables.tf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -206,6 +84,8 @@
       <workItem from="1724735313774" duration="4637000" />
       <workItem from="1728972573503" duration="19466000" />
       <workItem from="1733480678591" duration="319000" />
+      <workItem from="1733810234973" duration="8000" />
+      <workItem from="1734427871006" duration="1188000" />
     </task>
     <task id="LOCAL-00001" summary="cvwrv">
       <created>1724659264717</created>
