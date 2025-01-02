@@ -1,4 +1,9 @@
 
+## source = "../Aws-Modules/modules/vpc-nacl/App_subnet_nacl.tf"
+## Network Acl-App subnet
+
+#=======================================================================
+
 resource "aws_network_acl" "main_private_app_nacl" {
   vpc_id = var.vpc_id
 
@@ -11,15 +16,6 @@ resource "aws_network_acl" "main_private_app_nacl" {
     from_port  = 22
     to_port    = 22
   }
-
-#  ingress {
-#    protocol   = "tcp"
-#    rule_no    = 102
-#    action     = "allow"
-#    cidr_block = var.vpc_cidr_block
-#    from_port  = 0
-#    to_port    = 0
-#  }
 
 
   ingress {

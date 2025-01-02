@@ -1,3 +1,9 @@
+
+## source = "../Aws-Modules/modules/vpc-nacl/Public_subnet_nacl.tf"
+## Network Acl-Public subnet
+
+#=======================================================================
+
 resource "aws_network_acl" "main_public_nacl" {
   vpc_id = var.vpc_id
 

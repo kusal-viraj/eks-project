@@ -1,4 +1,8 @@
 
+## source = "../Aws-Modules/modules/launch_templates/backend_launchtemplate.tf"
+## Backend Launch Template For Backend Nodes
+
+#=======================================================================
 
 resource "aws_launch_template" "backend_launch_template" {
   name     = "backend-node-launch-template"
@@ -26,8 +30,6 @@ resource "aws_launch_template" "backend_launch_template" {
   }
   user_data = base64encode(file("${path.module}/user.sh"))
 }
-
-
 
 
 #  # Optional: Install Kubernetes tools

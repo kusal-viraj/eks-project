@@ -1,3 +1,9 @@
+
+## source = "../Aws-Modules/modules/vpc-route_tables/public_rt.tf"
+## Public Route Tables For public subnets
+
+#=======================================================================
+
 resource "aws_route_table" "main_public_rt" {
 
   vpc_id = var.vpc_id

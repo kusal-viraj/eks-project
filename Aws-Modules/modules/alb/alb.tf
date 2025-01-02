@@ -1,5 +1,8 @@
 
+## source = "../Aws-Modules/modules/alb/alb.tf"
+## Application Load Balancer
 
+#=======================================================================
 
 resource "aws_lb" "application_lb" {
   name               = "${var.env_name}-alb"

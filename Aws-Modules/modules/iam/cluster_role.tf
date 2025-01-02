@@ -1,3 +1,9 @@
+
+## source = "../Aws-Modules/modules/iam/cluster_role.tf"
+## Cluster_Role
+
+#=======================================================================
+
 # IAM Role for EKS Cluster
 resource "aws_iam_role" "eks_cluster_role" {
   name = "eks-cluster-role"

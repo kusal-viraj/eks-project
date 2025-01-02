@@ -1,3 +1,9 @@
+
+## source = "../Aws-Modules/modules/vpc-nacl/Bastion_nacl.tf"
+## Network Acl-Bastion subnet
+
+#=======================================================================
+
 resource "aws_network_acl" "main_bastion_nacl" {
 
   vpc_id = var.vpc_id

@@ -1,3 +1,9 @@
+
+## source = "../Aws-Modules/modules/iam/node_role.tf"
+## Node_Role
+
+#=======================================================================
+
 # IAM Role for EKS Node Groups
 resource "aws_iam_role" "eks_node_role" {
   name = "${var.env_name}-eks-node-role"

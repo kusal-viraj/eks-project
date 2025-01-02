@@ -1,5 +1,8 @@
 
+## source = "../Aws-Modules/modules/node_groups/frontend_node_groups/frontend_nodegroup.tf"
+## Frontend Node Group
 
+#=======================================================================
 
 # Frontend Node Group - Managed Node Group
 resource "aws_eks_node_group" "frontend_node_group" {
@@ -33,9 +36,6 @@ resource "aws_eks_node_group" "frontend_node_group" {
   labels = {
     Name = "${var.env_name}_frontend_node"
   }
-
-
-
 
   capacity_type = "ON_DEMAND" # Can also be "SPOT" for spot instances
 

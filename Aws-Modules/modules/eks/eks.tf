@@ -1,4 +1,8 @@
 
+## source = "../Aws-Modules/modules/eks/eks.tf"
+## EKS Cluster
+
+#=======================================================================
 
 resource "aws_eks_cluster" "main_eks_cluster" {
   name     = var.cluster_name

@@ -1,4 +1,6 @@
 
+## source = "../Aws-Modules/modules/vpc-security_groups/alb_sg.tf"
+## ALB Security Group
 
 #======================================================================
 
@@ -58,46 +60,3 @@ resource "aws_security_group_rule" "egress_allow_all" {
 
 
 #======================================================================
-
-
-
-
-
-
-
-#resource "aws_security_group" "main_alb_sg" {
-#  name        = "${var.env_name}-efs-sg"
-#  description = "Security group for EFS mount targets"
-#  vpc_id      = var.vpc_id
-#
-#  # Allow NFS traffic (port 2049) from within the VPC or specific instances
-#  ingress {
-#    from_port   = 80
-#    to_port     = 80
-#    protocol    = "tcp"
-#    cidr_blocks = ["0.0.0.0/0"]  # Replace with your VPC CIDR or allow only specific sources
-#    #security_groups = aws_security_group.eks_backend_node_group_sg.id
-#  }
-#
-#  ingress {
-#    from_port   = 443
-#    to_port     = 443
-#    protocol    = "tcp"
-#    cidr_blocks = ["0.0.0.0/0"] # Replace with your VPC CIDR or allow only specific sources
-#    #security_groups = aws_security_group.eks_backend_node_group_sg.id
-#  }
-#
-#  # Allow all egress traffic
-#  egress {
-#    from_port   = 0
-#    to_port     = 0
-#    protocol    = "-1"
-#    #cidr_blocks = ["10.50.0.0/16"]
-#    security_groups = [aws_security_group.eks_frontend_node_group_sg.id]
-#  }
-#
-#  tags = {
-#    Name = "${var.env_name}-efs-sg"
-#    Env  = var.env_name
-#  }
-#}

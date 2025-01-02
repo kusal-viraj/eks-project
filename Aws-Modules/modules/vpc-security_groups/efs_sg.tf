@@ -1,4 +1,7 @@
 
+## source = "../Aws-Modules/modules/vpc-security_groups/efs_sg.tf"
+## EFS drive Security Group
+
 #=======================================================================
 
 resource "aws_security_group" "main_efs_sg" {
@@ -42,30 +45,3 @@ resource "aws_security_group_rule" "main_efs_egress" {
 #======================================================================
 
 
-#resource "aws_security_group" "main_efs_sg" {
-##  name        = "${var.env_name}-efs-sg"
-#  description = "Security group for EFS mount targets"
-#  vpc_id      = var.vpc_id
-#
-#  # Allow NFS traffic (port 2049) from within the VPC or specific instances
-#  ingress {
-#    from_port   = 2049
-#    to_port     = 2049
-#    protocol    = "tcp"
-#    #cidr_blocks = ["10.0.0.0/16"]  # Replace with your VPC CIDR or allow only specific sources
-#    security_groups = [aws_security_group.eks_backend_node_group_sg.id]
-#  }
-#
-#  # Allow all egress traffic
-#  egress {
-#    from_port   = 0
-#    to_port     = 0
-#    protocol    = "-1"
-#    cidr_blocks = [var.vpc_cidr_block] # Replace with the correct CIDR block # the cidr block shoulbe insert as a list for sg
-#  }
-#
-#  tags = {
-#    Name = "${var.env_name}-efs-sg"
-#    Env  = var.env_name
-#  }
-#}

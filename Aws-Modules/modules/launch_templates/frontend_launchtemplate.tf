@@ -1,3 +1,9 @@
+
+## source = "../Aws-Modules/modules/launch_templates/frontend_launchtemplate.tf"
+## Frontend Launch Template For Frontend Nodes
+
+#=======================================================================
+
 resource "aws_launch_template" "frontend_launch_template" {
   name     = "frontend-node-launch-template"
   # image_id = var.node_group_ami  # Use the appropriate AMI

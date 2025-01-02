@@ -13,6 +13,10 @@ resource "aws_db_subnet_group" "main_rds_dbsubnet_group" {
   description = "Database subnet group for ${var.env_name} environment."
 }
 
+## source = "../Aws-Modules/modules/rds/rds.tf"
+## RDS
+
+#=======================================================================
 
 resource "aws_db_instance" "rds" {
   identifier              = "${var.env_name}-rds-instance"
@@ -35,9 +39,10 @@ resource "aws_db_instance" "rds" {
   backup_retention_period = var.backup_retention
   storage_encrypted       = true
 
-#  lifecycle {
-#    prevent_destroy = true
-#  }
+  lifecycle {
+    prevent_destroy = true
+    ignore_changes  = [engine_version]
+  }
 
   tags = {
     Name                  = "${var.env_name}-rds-instance"
